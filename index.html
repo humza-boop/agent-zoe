@@ -792,19 +792,46 @@ function TeaserMark({ size=8 }) {
   return <span className="tmark" style={{width:size,height:size}} aria-hidden="true"/>;
 }
 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRL2a3zrR5vgjRlRPnluO6O8PXwYBFb4AluihMjJgLTP3-uB2u_64TIR6dIwx6_jKP/exec';
+
 function TeaserCapture({ theme='dark', cta='Request an introduction', note, align='left' }) {
   const [v, setV] = useState({email:'',name:'',firm:''});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | done | error
   const on = k => e => setV(s=>({...s,[k]:e.target.value}));
-  const submit = e => { e.preventDefault(); setSent(true); };
-  if (sent) {
+
+  const submit = async e => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({ name: v.name, email: v.email, firm: v.firm })
+      });
+      setStatus('done');
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'done') {
     return (
       <div className={'tcap tcap--'+theme+' tcap--done tcap--'+align}>
         <span className="tcap__dot" aria-hidden="true"/>
-        <p className="tcap__thanks">Received. If it's a fit, someone from the desk will reach out — quietly, and soon.</p>
+        <p className="tcap__thanks">Received. We review every introduction personally — if there's a fit, someone from the team will be in touch soon.</p>
       </div>
     );
   }
+
+  if (status === 'error') {
+    return (
+      <div className={'tcap tcap--'+theme+' tcap--done tcap--'+align}>
+        <span className="tcap__dot" aria-hidden="true"/>
+        <p className="tcap__thanks">Something went wrong on our end — please try again in a moment.</p>
+      </div>
+    );
+  }
+
   return (
     <form className={'tcap tcap--'+theme+' tcap--'+align} onSubmit={submit}>
       <div className="tcap__fields">
@@ -817,7 +844,10 @@ function TeaserCapture({ theme='dark', cta='Request an introduction', note, alig
             value={v.firm} onChange={on('firm')} aria-label="Firm (optional)"/>
         </div>
       </div>
-      <button className="tcap__btn" type="submit">{cta}<span className="tcap__arrow">→</span></button>
+      <button className="tcap__btn" type="submit" disabled={status==='sending'}>
+        {status==='sending' ? 'Sending…' : cta}
+        {status!=='sending' && <span className="tcap__arrow">→</span>}
+      </button>
       {note && <p className="tcap__note">{note}</p>}
     </form>
   );
