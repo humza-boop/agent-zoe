@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Something quiet is coming for tax firms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --font-head: 'Newsreader', Georgia, serif;
+    --head-weight: 400;
+    --head-tracking: -0.012em;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --accent: #51624f;
+    --accent2: #8a9a86;
+    --fg: #232220; --muted: #6e6a62; --faint: #a39d92;
+    --hair: rgba(35,34,32,0.12);
+    --panel: rgba(255,255,255,0.7); --panel-strong: #ffffff;
+    --paper: #f4f0e8;
+  }
+  .theme-dark {
+    --fg: #edeae2; --muted: #a7aca2; --faint: #6f746c;
+    --hair: rgba(237,234,226,0.15);
+    --panel: rgba(237,234,226,0.05); --panel-strong: rgba(20,24,20,0.62);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--fg);
+    font-family: var(--font-body); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  ::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+  a { color: inherit; }
+
+  /* ============ layout ============ */
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+  .section { position: relative; padding: clamp(92px, 12vh, 168px) 0; }
+  .section--tint { background: linear-gradient(180deg, #f1ece2 0%, #f4f0e8 100%); }
+  .section + .section { border-top: 1px solid rgba(35,34,32,0.06); }
+
+  /* ============ editorial type ============ */
+  .eyebrow { display: flex; align-items: center; gap: 11px; margin: 0 0 22px;
+    font-family: var(--font-body); font-size: 11.5px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .eyebrow--center { justify-content: center; }
+  .eyebrow__tick { width: 14px; height: 1px; background: var(--accent); }
+  .s-head { max-width: 760px; }
+  .s-head--center { max-width: 720px; margin: 0 auto; text-align: center; }
+  .s-title { margin: 0; font-family: var(--font-head); font-weight: var(--head-weight);
+    font-size: clamp(30px, 4.4vw, 52px); line-height: 1.06; letter-spacing: var(--head-tracking); color: var(--fg); text-wrap: balance; }
+  .s-title--narrow { max-width: 16ch; }
+  .s-head--center .s-title--narrow { max-width: none; }
+  .s-lead { margin: 22px 0 0; font-size: 17.5px; line-height: 1.6; color: var(--muted); max-width: 60ch; font-weight: 400; }
+  .s-head--center .s-lead { margin-left: auto; margin-right: auto; }
+
+  /* ============ wordmark ============ */
+  .wordmark { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .wordmark__mark { width: 7px; height: 7px; transform: rotate(45deg); border: 1px solid var(--accent); flex-shrink: 0; }
+  .wordmark__name { font-family: var(--font-head); font-weight: 500; font-size: 19px; letter-spacing: 0.004em; color: var(--fg); white-space: nowrap; }
+  .tmark { display: inline-block; transform: rotate(45deg); border: 1px solid var(--accent); flex-shrink: 0; }
+
+  /* ============ capture ============ */
+  .tcap { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 460px; }
+  .tcap--center { align-items: center; text-align: center; margin: 0 auto; }
+  .tcap__fields { display: flex; flex-direction: column; gap: 13px; width: 100%; }
+  .tcap__row2 { display: flex; gap: 13px; }
+  .tcap__field { flex: 1; min-width: 0; background: transparent; border: none;
+    border-bottom: 1px solid var(--hair); color: var(--fg); font-family: var(--font-body);
+    font-size: 15.5px; padding: 11px 2px; outline: none; transition: border-color .25s; text-align: left; }
+  .tcap__field::placeholder { color: var(--faint); }
+  .tcap__field:focus { border-bottom-color: var(--accent); }
+  .tcap__btn { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    border: 1px solid var(--accent); background: transparent; color: var(--fg);
+    font-family: var(--font-body); font-size: 13px; font-weight: 500; letter-spacing: 0.02em;
+    padding: 13px 24px; border-radius: 4px; white-space: nowrap; transition: background .25s, color .25s, transform .2s; }
+  .tcap--center .tcap__btn { align-self: center; }
+  .tcap__btn:hover { background: var(--accent); color: #f6f3ec; transform: translateY(-1px); }
+  .tcap__arrow { transition: transform .25s; }
+  .tcap__btn:hover .tcap__arrow { transform: translateX(4px); }
+  .tcap__note { margin: 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--faint); line-height: 1.6; }
+  .tcap--done { gap: 12px; flex-direction: row; align-items: center; }
+  .tcap__dot { width: 8px; height: 8px; transform: rotate(45deg); background: var(--accent); flex-shrink: 0; }
+  .tcap__thanks { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--muted); max-width: 42ch; }
+
+  /* ============ sticky nav ============ */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px clamp(24px, 5vw, 56px);
+    --fg: #edeae2; --muted: #c4c8be; color: var(--fg);
+    transition: background .4s ease, padding .4s ease, box-shadow .4s ease, color .4s ease; }
+  .nav__brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
+  .nav__tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .nav__links { display: flex; align-items: center; gap: 30px; }
+  .nav__link { font-size: 13px; letter-spacing: 0.01em; color: var(--muted); text-decoration: none;
+    padding-bottom: 3px; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; }
+  .nav__link:hover { color: var(--fg); border-bottom-color: var(--accent); }
+  .nav__link.is-active { color: var(--fg); border-bottom-color: var(--accent); }
+  .nav__cta { font-size: 13px; font-weight: 500; letter-spacing: 0.01em; text-decoration: none;
+    color: var(--fg); border: 1px solid currentColor; padding: 9px 18px; border-radius: 4px; opacity: 0.92;
+    transition: background .25s, color .25s, opacity .25s, border-color .25s; }
+  .nav__cta:hover { opacity: 1; background: var(--fg); color: var(--paper); border-color: var(--fg); }
+  .nav.solid { background: rgba(244,240,232,0.86); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgba(35,34,32,0.08); padding-top: 14px; padding-bottom: 14px; --fg: #232220; --muted: #6e6a62; }
+  .nav.solid .nav__cta { color: #fff; background: #232220; border-color: #232220; }
+  .nav.solid .nav__cta:hover { filter: brightness(1.12); }
+
+  /* ============ stage / hero ============ */
+  .stage { position: relative; overflow: hidden; }
+  .bg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .lhero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;
+    background: radial-gradient(125% 110% at 64% 2%, #1d221e 0%, #161a17 54%, #10130e 100%); color: var(--fg); padding: 120px 24px 96px; }
+  .lhero__veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: radial-gradient(60% 50% at 50% 48%, rgba(16,19,14,0.82) 0%, rgba(16,19,14,0.4) 44%, rgba(16,19,14,0) 72%),
+      linear-gradient(180deg, rgba(16,19,14,0.55) 0%, rgba(16,19,14,0) 28%, rgba(16,19,14,0) 68%, rgba(16,19,14,0.6) 100%); }
+  .lhero__inner { position: relative; z-index: 3; max-width: 820px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .lhero__title { margin: 0; font-family: var(--font-head); font-weight: var(--head-weight);
+    font-size: clamp(38px, 5.4vw, 70px); line-height: 1.03; letter-spacing: var(--head-tracking); text-wrap: balance; }
+  .lhero__support { margin: 0; max-width: 600px; font-size: 16.5px; line-height: 1.62; color: var(--muted); }
+  .lhero__cta { margin-top: 12px; display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+    text-decoration: none; border: 1px solid var(--accent); color: var(--fg); background: transparent;
+    font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+    padding: 14px 28px; border-radius: 4px; transition: background .25s, color .25s, transform .2s; }
+  .lhero__cta:hover { background: var(--accent); color: #f6f3ec; transform: translateY(-1px); }
+  .lhero__cta-arrow { transition: transform .25s; }
+  .lhero__cta:hover .lhero__cta-arrow { transform: translateX(4px); }
+  .lhero__foot { position: absolute; left: clamp(24px, 5vw, 56px); bottom: 26px; z-index: 4; margin: 0;
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--faint); max-width: 50vw; }
+  .lhero__live { position: absolute; right: clamp(24px, 5vw, 56px); bottom: 24px; z-index: 4; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+  .lhero__live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: az-pulse 2.8s ease-out infinite; }
+  .scrollcue { position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; }
+  .scrollcue__label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); }
+  .scrollcue__line { width: 1px; height: 40px; background: linear-gradient(var(--accent), transparent); animation: cue 2.4s ease-in-out infinite; transform-origin: top; }
+  @keyframes cue { 0%,100% { transform: scaleY(0.5); opacity: 0.5; } 50% { transform: scaleY(1); opacity: 1; } }
+  @keyframes az-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  /* ============ scroll reveal + progress ============ */
+  [data-reveal] { opacity: 0; transform: translateY(22px); will-change: opacity, transform;
+    transition: opacity 0.85s cubic-bezier(0.22,0.61,0.36,1), transform 0.85s cubic-bezier(0.22,0.61,0.36,1); }
+  [data-reveal].in { opacity: 1; transform: none; }
+  .motion-still [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .scrollprog { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 120; pointer-events: none;
+    background: color-mix(in srgb, var(--accent) 16%, transparent); }
+  .scrollprog__bar { height: 100%; transform-origin: left center; transform: scaleX(0);
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); box-shadow: 0 0 10px -1px color-mix(in srgb, var(--accent) 55%, transparent); transition: transform 0.08s linear; }
+
+  /* ============ the problem ============ */
+  .problem { display: grid; grid-template-columns: 1fr; gap: 56px; }
+  .problem__head { display: grid; grid-template-columns: 1.04fr 1fr; gap: 40px 72px; align-items: start; }
+  .problem__title .s-head { max-width: none; }
+  .problem__copy { display: flex; flex-direction: column; gap: 18px; padding-top: 6px; }
+  .problem__lead { margin: 0; max-width: 52ch; }
+  .problem__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .fmode { display: flex; flex-direction: column; gap: 18px; padding-top: 22px; border-top: 1px solid var(--hair); }
+  .fmode__viz { position: relative; width: 100%; height: 172px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0)); border-radius: 6px; }
+  .fmode__head { display: flex; align-items: baseline; gap: 14px; }
+  .fmode__n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); letter-spacing: 0.05em; }
+  .fmode__t { margin: 0; font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 1.2; }
+  .fmode__d { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+  /* ---- problem illustrations ---- */
+  .pviz { width: 100%; height: 100%; display: block; overflow: visible; color: var(--accent); }
+  .pviz__base { stroke: rgba(35,34,32,0.16); stroke-width: 1; fill: none; }
+  .pviz__g { stroke: currentColor; stroke-width: 1; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .pviz__lab { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.4px; fill: var(--muted); }
+  .pviz__lab--accent { fill: var(--accent); }
+  .pviz__lab--alert { fill: #b8743f; }
+
+  /* tangled channels (01) */
+  .pviz__flow { stroke: var(--accent); stroke-width: 1.35; fill: none; opacity: 0.6;
+    stroke-dasharray: 3 320; stroke-dashoffset: 0; animation: pviz-flow var(--d, 3.4s) linear var(--dl, 0s) infinite; }
+  .pviz__flow.is-drop { animation: pviz-flow var(--d) linear var(--dl) infinite, pviz-fade var(--d) linear var(--dl) infinite; }
+  @keyframes pviz-flow { to { stroke-dashoffset: -323; } }
+  @keyframes pviz-fade { 0%, 26% { opacity: 0.6; } 48% { opacity: 0; } 100% { opacity: 0; } }
+  .pviz__src { fill: rgba(248,245,238,0.95); stroke: var(--accent); stroke-width: 1.1; color: var(--accent);
+    animation: pviz-emit 3.2s ease-out var(--dl, 0s) infinite; }
+  @keyframes pviz-emit { 0%, 100% { stroke-opacity: 0.4; } 12% { stroke-opacity: 1; } 40% { stroke-opacity: 0.4; } }
+  .pviz__chip { color: var(--accent); animation: pviz-float 4.6s ease-in-out var(--dl, 0s) infinite; }
+  .pviz__chip-plate { fill: var(--panel-strong, #fff); stroke: var(--hair); stroke-width: 1; }
+  .pviz__chip--alert { color: #b8743f; }
+  .pviz__chip--alert .pviz__chip-plate { stroke: rgba(184,116,63,0.5); }
+  @keyframes pviz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  .pviz__bracket { stroke: rgba(35,34,32,0.2); stroke-width: 1; stroke-dasharray: 2 4; fill: none; }
+  .pviz__q, .pviz__qmark { font-family: var(--font-head); fill: #b8743f; }
+  .pviz__q { font-size: 17px; }
+  .pviz__qmark { font-size: 14px; }
+
+  /* document queue (02) */
+  .pviz__tray { stroke: var(--accent); stroke-width: 1.1; fill: none; stroke-linejoin: round; }
+  .pviz__ghost { fill: none; stroke: rgba(35,34,32,0.14); stroke-width: 1; }
+  .pviz__card { fill: var(--panel-strong, #fff); stroke: var(--accent); stroke-width: 1.1; }
+  .pviz__card-fold { stroke: var(--accent); stroke-width: 1.1; fill: none; }
+  .pviz__card--missing { fill: rgba(184,116,63,0.05); stroke: #b8743f; stroke-dasharray: 3 3; }
+  .pviz__queue { animation: pviz-stall 4.8s cubic-bezier(.5,0,.2,1) infinite; }
+  @keyframes pviz-stall { 0% { transform: translateX(16px); } 16%, 100% { transform: translateX(0); } }
+  .pviz__ping { stroke: #b8743f; stroke-width: 1.1; fill: none; transform-box: fill-box; transform-origin: center;
+    animation: pviz-ping 2.6s ease-out infinite; }
+  .pviz__ping--2 { animation-delay: 1.3s; }
+  @keyframes pviz-ping { 0% { transform: scale(0.5); opacity: 0; } 14% { opacity: 0.75; } 100% { transform: scale(2.6); opacity: 0; } }
+
+  /* operational blind spots (03) */
+  .pviz__band { fill: rgba(184,116,63,0.05); stroke: rgba(184,116,63,0.4); stroke-width: 1; stroke-dasharray: 3 4; }
+  .pviz__role { fill: var(--faint); letter-spacing: 0.6px; }
+  .pviz__pip-ring { fill: none; stroke: rgba(35,34,32,0.22); stroke-width: 1.15; }
+  .pviz__pip--done .pviz__pip-ring { stroke: var(--accent); }
+  .pviz__pip--unknown .pviz__pip-ring { stroke: #b8743f; }
+  .pviz__pip-dot { fill: var(--accent); }
+  .pviz__pip-q { fill: #b8743f; font-family: var(--font-mono); font-size: 9px; }
+  .pviz__pip--unknown { animation: pviz-flicker 2.6s steps(1) infinite; }
+  @keyframes pviz-flicker { 0%, 40% { opacity: 1; } 46% { opacity: 0.2; } 54% { opacity: 1; } 62% { opacity: 0.25; } 72%, 100% { opacity: 1; } }
+
+  /* per-section in-view gating */
+  .pviz__flow, .pviz__src, .pviz__chip, .pviz__queue, .pviz__ping, .pviz__pip--unknown { animation-play-state: paused; }
+  .fmode.in .pviz__flow, .fmode.in .pviz__src, .fmode.in .pviz__chip,
+  .fmode.in .pviz__queue, .fmode.in .pviz__ping, .fmode.in .pviz__pip--unknown { animation-play-state: running; }
+  .motion-still .pviz__flow, .motion-still .pviz__src, .motion-still .pviz__chip,
+  .motion-still .pviz__queue, .motion-still .pviz__ping, .motion-still .pviz__pip--unknown { animation-play-state: paused; }
+
+  /* ============ how it works ============ */
+  .how { overflow: hidden; }
+  .how__bg { position: absolute; inset: 0; z-index: 0; opacity: 0.5; pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent); }
+  .how__stage { position: absolute; inset: 0; }
+  .how__wrap { position: relative; z-index: 2; }
+  .steps { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .step { display: flex; flex-direction: column; gap: 14px; }
+  .step__n { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+  .step__t { margin: 0; font-family: var(--font-head); font-weight: 500; font-size: 21px; line-height: 1.25; }
+  .step__d { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+  /* a-better-way flow scene */
+  .how__scene { position: relative; margin: 60px auto 8px; max-width: 1080px; height: 460px; }
+  .how__scene-cap { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); white-space: nowrap;
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); }
+  .os-svg { width: 100%; height: 100%; display: block; overflow: visible; color: var(--accent); }
+  .os-g { stroke: currentColor; stroke-width: 1; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .os-thread-base { fill: none; stroke: rgba(35,34,32,0.2); stroke-width: 1.4;
+    animation: os-morph var(--osd, 8s) cubic-bezier(.85,0,.15,1) infinite; }
+  .os-thread-flow { fill: none; stroke: var(--accent); stroke-width: 2.1; opacity: 0.6; stroke-dasharray: 3 118;
+    animation: os-morph var(--osd, 8s) cubic-bezier(.85,0,.15,1) infinite, os-flow 9s linear infinite; }
+  @keyframes os-flow { to { stroke-dashoffset: -121; } }
+  .os-merge-base { fill: none; stroke: rgba(35,34,32,0.14); stroke-width: 1; stroke-dasharray: 2 5;
+    animation: os-conn var(--osd, 8s) cubic-bezier(.85,0,.15,1) infinite; }
+  @keyframes os-conn { 0%, 16% { opacity: 1; } 34%, 64% { opacity: 0; } 84%, 100% { opacity: 1; } }
+  .os-pull { animation: os-pull var(--osd, 8s) cubic-bezier(.85,0,.15,1) infinite; }
+  @keyframes os-pull {
+    0%, 16% { transform: translate(0,0); opacity: 1; }
+    30% { opacity: 1; }
+    34%, 64% { transform: translate(var(--tx,0px), var(--ty,0px)); opacity: 0; }
+    84%, 100% { transform: translate(0,0); opacity: 1; } }
+  .os-token { color: var(--accent); animation: os-bob 6s ease-in-out var(--dl, 0s) infinite; }
+  .os-token-plate { fill: var(--paper); stroke: var(--hair); stroke-width: 1; }
+  @keyframes os-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  .os-axis { stroke: rgba(35,34,32,0.16); stroke-width: 1; }
+  .os-drop { stroke: rgba(35,34,32,0.3); stroke-width: 1.4; stroke-linecap: round; }
+  .os-tick { fill: var(--faint); }
+  .os-tick--filed { fill: var(--accent); }
+  .os-node { animation: os-settle var(--osd, 8s) cubic-bezier(.85,0,.15,1) infinite; }
+  @keyframes os-settle {
+    0%, 16% { transform: translateY(0); }
+    34%, 64% { transform: translateY(var(--dy,0px)); }
+    84%, 100% { transform: translateY(0); } }
+  .os-node-ring { fill: var(--paper); stroke: var(--accent); stroke-width: 1.4;
+    animation: os-pulse 7s ease-in-out var(--dl, 0s) infinite; }
+  .os-node-dot { fill: var(--accent); }
+  .os-node--filed .os-node-ring { stroke-width: 1.6; }
+  .os-check { fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  @keyframes os-pulse { 0%, 100% { stroke-opacity: 0.5; } 12% { stroke-opacity: 1; } 44% { stroke-opacity: 0.5; } }
+  .os-lab { fill: var(--faint); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 1.5px; }
+  .os-lab--accent { fill: var(--accent); }
+  .os-thread-base, .os-thread-flow, .os-merge-base, .os-pull, .os-token, .os-node, .os-node-ring { animation-play-state: paused; }
+  .how__scene.is-live .os-thread-base, .how__scene.is-live .os-thread-flow, .how__scene.is-live .os-merge-base,
+  .how__scene.is-live .os-pull, .how__scene.is-live .os-token, .how__scene.is-live .os-node, .how__scene.is-live .os-node-ring { animation-play-state: running; }
+  .motion-still .os-thread-base, .motion-still .os-thread-flow, .motion-still .os-merge-base,
+  .motion-still .os-pull, .motion-still .os-token, .motion-still .os-node, .motion-still .os-node-ring { animation-play-state: paused; }
+
+  /* ============ manifesto (dark) ============ */
+  .manifesto { background: radial-gradient(120% 120% at 30% 10%, #1d221e 0%, #161a17 52%, #10130e 100%); color: var(--fg); padding: clamp(110px, 16vh, 200px) 0; }
+  .manifesto__veil { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(80% 80% at 30% 40%, rgba(16,19,14,0) 30%, rgba(16,19,14,0.55) 100%); }
+  .manifesto__inner { position: relative; z-index: 3; max-width: 1000px; }
+  .manifesto__lead { margin: 10px 0 0; font-family: var(--font-head); font-weight: 300; font-size: clamp(27px, 3.5vw, 44px); line-height: 1.28; letter-spacing: -0.012em; text-wrap: balance; max-width: 22ch; color: var(--fg); }
+  .manifesto__copy { margin: 32px 0 0; display: flex; flex-direction: column; gap: 18px; max-width: 62ch; }
+  .manifesto__copy p { margin: 0; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.68; color: var(--muted); }
+  .manifesto__kicker { margin: 36px 0 0; font-family: var(--font-head); font-weight: 400; font-size: clamp(21px, 2.3vw, 30px); line-height: 1.3; letter-spacing: -0.006em; color: var(--fg); }
+  .manifesto__sign { margin-top: 48px; display: flex; align-items: center; gap: 16px; }
+  .manifesto__rule { width: 40px; height: 1px; background: var(--accent); }
+  .manifesto__by { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--faint); text-transform: uppercase; }
+
+  /* ============ final cta (dark) · name reveal ============ */
+  .finalcta { background: radial-gradient(130% 120% at 50% 0%, #1d221e 0%, #161a17 52%, #10130e 100%); color: var(--fg);
+    padding: clamp(120px, 18vh, 220px) 24px; display: flex; align-items: center; justify-content: center; }
+  .finalcta__veil { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(70% 70% at 50% 46%, rgba(16,19,14,0) 32%, rgba(16,19,14,0.5) 100%); }
+  .finalcta__inner { position: relative; z-index: 3; max-width: 720px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .finalcta__name { margin: 0; font-family: var(--font-head); font-weight: var(--head-weight);
+    font-size: clamp(64px, 11vw, 150px); line-height: 0.9; letter-spacing: -0.03em; color: var(--fg); }
+  .finalcta__support { margin: 0; max-width: 540px; font-size: 16.5px; line-height: 1.62; color: var(--muted); }
+  .finalcta__cta { margin-top: 10px; width: 100%; display: flex; justify-content: center; }
+
+  /* ============ footer (dark) ============ */
+  .footer { background: #10130e; color: var(--fg); padding: 84px 0 40px; }
+  .footer__grid { display: grid; grid-template-columns: 1.3fr 2fr; gap: 60px; }
+  .footer__line { margin: 20px 0 0; max-width: 34ch; font-size: 14.5px; line-height: 1.6; color: var(--muted); }
+  .footer__cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .footer__h { margin: 0 0 16px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .footer__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .footer__col a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .footer__col a:hover { color: var(--fg); }
+  .footer__base { margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--hair); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em; color: var(--faint); }
+
+  /* ============ grain ============ */
+  .grain-on .stage::after, .grain-on .footer::after {
+    content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0.05; mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* ============ motion intensity ============ */
+  .motion-still .lhero__live-dot, .motion-still .scrollcue__line { animation-play-state: paused !important; }
+
+  /* ============ responsive ============ */
+  @media (max-width: 900px) {
+    .problem__head { grid-template-columns: 1fr; gap: 26px; }
+    .problem__list, .steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer__grid { grid-template-columns: 1fr; gap: 44px; }
+  }
+  @media (max-width: 680px) {
+    .wrap { padding: 0 24px; }
+    .nav__links { display: none; }
+    .problem__list, .steps, .footer__cols { grid-template-columns: 1fr; }
+    .tcap__row2 { flex-direction: column; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .lhero__live-dot, .scrollcue__line { animation: none; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .pviz__flow, .pviz__src, .pviz__chip, .pviz__queue, .pviz__ping, .pviz__pip--unknown,
+    .os-thread-base, .os-thread-flow, .os-merge-base, .os-pull, .os-token, .os-node, .os-node-ring { animation: none !important; }
+    .pviz__flow, .os-thread-flow { opacity: 0.5; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+/* ====================================================================
+   Agent Zoe Teaser — production implementation
+   ==================================================================== */
+const { useState, useRef, useEffect, useLayoutEffect, useCallback } = React;
+
+/* ===== tweaks state (palette / motion live-tuning) ===== */
+const TWEAK_DEFAULTS = { palette: ["#51624f","#8a9a86"], headFont: "serif", motion: "lively", grain: false };
+const PALETTES = [["#51624f","#8a9a86"],["#9a7b4f","#c2a878"],["#3c3a35","#9a958b"],["#4e6173","#93a2af"]];
+const MOTION_SPEED = { still: 0, calm: 0.5, lively: 0.85 };
+
+function useTweaks(defaults) {
+  const [values, setValues] = useState(defaults);
+  const setTweak = useCallback((key, val) => {
+    setValues(prev => ({ ...prev, [key]: val }));
+  }, []);
+  return [values, setTweak];
+}
+
+/* ====================================================================
+   BACKGROUNDS — ConstellationBg canvas
+   ==================================================================== */
+function hexToRgb(hex) {
+  const h = hex.replace('#','');
+  const n = parseInt(h.length===3 ? h.split('').map(c=>c+c).join('') : h, 16);
+  return [(n>>16)&255,(n>>8)&255,n&255];
+}
+const rgba = (c,a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+function setupCanvas(canvas,w,h) {
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
+  canvas.style.width=w+'px'; canvas.style.height=h+'px';
+  const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return ctx;
+}
+const inkFor = t => t==='dark' ? [237,234,226] : [35,34,32];
+
+function ConstellationBg({ accent, accent2, speed, width, height, theme, stations }) {
+  const ref = useRef(null);
+  const cfg = useRef({});
+  cfg.current = { accent, accent2, speed, theme, stations };
+
+  useEffect(() => {
+    const canvas = ref.current;
+    const w = width, h = height;
+    const ctx = setupCanvas(canvas, w, h);
+    let raf;
+    const rnd = (() => { let s=7723; return ()=>(s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff; })();
+
+    const anchor = { x: w*0.30, y: h*0.44 };
+    const anchor2 = { x: w*0.76, y: h*0.30 };
+    const R = Math.max(w,h)*0.6;
+    const N = 130;
+    const pts = [];
+    for (let i=0;i<N;i++) {
+      let x,y; const m=rnd();
+      if (m<0.5) { const a=rnd()*7,d=70+rnd()*(R*0.92); x=anchor.x+Math.cos(a)*d; y=anchor.y+Math.sin(a)*d; }
+      else if (m<0.8) { const a=rnd()*7,d=50+rnd()*250; x=anchor2.x+Math.cos(a)*d; y=anchor2.y+Math.sin(a)*d; }
+      else { x=rnd()*w; y=rnd()*h; }
+      const ang=Math.atan2(y-anchor.y,x-anchor.x);
+      const dist=Math.hypot(x-anchor.x,y-anchor.y);
+      pts.push({x,y,ang:(ang+Math.PI*2)%(Math.PI*2),dist,ping:0,resolved:0,tw:rnd()*7});
+    }
+    const edges=[];
+    for (let i=0;i<N;i++) {
+      let best=-1,bestD=78;
+      for (let j=0;j<N;j++) { if(i===j) continue; const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y); if(d<bestD){bestD=d;best=j;} }
+      if (best>=0&&best>i) edges.push([i,best]);
+    }
+
+    const pulses=[];
+    let lastSpawn=0,sweep=0;
+    function pickTarget() {
+      const st=cfg.current.stations||[];
+      if (st.length&&Math.random()<0.55) return st[Math.floor(Math.random()*st.length)];
+      const right=pts.filter(p=>p.x>anchor.x-40);
+      const pool=right.length?right:pts;
+      return pool[Math.floor(Math.random()*pool.length)];
+    }
+    const spawn=(from,depth)=>pulses.push({ax:from.x,ay:from.y,tgt:pickTarget(),p:0,depth});
+
+    let t0=performance.now();
+    function frame(now) {
+      const {accent,accent2,speed,theme}=cfg.current;
+      const dt=Math.min((now-(frame._last||now))/16.67,3); frame._last=now;
+      const t=(now-t0)/1000*speed;
+      ctx.clearRect(0,0,w,h);
+      const ink=inkFor(theme),cA=hexToRgb(accent),cB=hexToRgb(accent2);
+
+      ctx.strokeStyle=rgba(ink,0.035); ctx.lineWidth=1;
+      for(let rr=1;rr<=4;rr++){ctx.beginPath();ctx.arc(anchor.x,anchor.y,(R/4.2)*rr,0,7);ctx.stroke();}
+
+      ctx.strokeStyle=rgba(ink,0.06); ctx.beginPath();
+      for(const[i,j]of edges){ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);}
+      ctx.stroke();
+
+      sweep+=0.0048*dt*speed;
+      const sa=sweep%(Math.PI*2);
+      const segs=20,span=0.55;
+      for(let s=0;s<segs;s++){
+        const a0=sa-(s/segs)*span,a1=sa-((s+1)/segs)*span;
+        ctx.fillStyle=rgba(cA,0.03*(1-s/segs));
+        ctx.beginPath();ctx.moveTo(anchor.x,anchor.y);ctx.arc(anchor.x,anchor.y,R,a0,a1,true);ctx.closePath();ctx.fill();
+      }
+      ctx.strokeStyle=rgba(cA,0.12);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(anchor.x,anchor.y);ctx.lineTo(anchor.x+Math.cos(sa)*R,anchor.y+Math.sin(sa)*R);ctx.stroke();
+
+      for(const p of pts){
+        let dAng=Math.abs(((p.ang-sa+Math.PI*3)%(Math.PI*2))-Math.PI);dAng=Math.PI-dAng;
+        if(dAng<0.03&&p.dist<R&&p.ping<=0.02)p.ping=1;
+        p.ping=Math.max(0,p.ping-0.012*dt);p.resolved=Math.max(0,p.resolved-0.009*dt);
+        const tw=0.17+0.07*Math.sin(t*1.1+p.tw);
+        const lvl=Math.min(tw+p.ping*0.7+p.resolved*0.5,1);
+        if(p.ping>0.02){ctx.strokeStyle=rgba(cA,p.ping*0.35);ctx.lineWidth=1;ctx.beginPath();ctx.arc(p.x,p.y,2+9*(1-p.ping),0,7);ctx.stroke();}
+        if(p.resolved>0.02){ctx.strokeStyle=rgba(cA,p.resolved*0.45);ctx.lineWidth=1.1;ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,7);ctx.stroke();}
+        ctx.fillStyle=rgba(ink,lvl);ctx.beginPath();ctx.arc(p.x,p.y,1.2,0,7);ctx.fill();
+      }
+
+      if(speed>0&&now-lastSpawn>1100/speed&&pulses.length<6){spawn(Math.random()<0.7?anchor:anchor2,0);lastSpawn=now;}
+      for(let k=pulses.length-1;k>=0;k--){
+        const pu=pulses[k];pu.p+=0.018*dt*speed;
+        const x=pu.ax+(pu.tgt.x-pu.ax)*pu.p,y=pu.ay+(pu.tgt.y-pu.ay)*pu.p;
+        ctx.strokeStyle=rgba(cA,0.18);ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(pu.ax,pu.ay);ctx.lineTo(x,y);ctx.stroke();
+        ctx.fillStyle=rgba(cA,0.9);ctx.beginPath();ctx.arc(x,y,1.6,0,7);ctx.fill();
+        if(pu.p>=1){
+          pulses.splice(k,1);pu.tgt.resolved=1;pu.tgt.ping=Math.max(pu.tgt.ping,0.6);
+          if(pu.tgt.isStation)pu.tgt.glow=1;
+          if(pu.depth<1&&pulses.length<6&&Math.random()<0.35)spawn(pu.tgt,pu.depth+1);
+        }
+      }
+
+      const st=cfg.current.stations||[];
+      for(const s of st){
+        s.glow=Math.max(0,(s.glow||0)-0.012*dt*Math.max(speed,0.4));
+        if(s.glow>0.02){ctx.fillStyle=rgba(cA,s.glow*0.13);ctx.beginPath();ctx.arc(s.x,s.y,6+11*s.glow,0,7);ctx.fill();}
+        ctx.fillStyle=rgba(cA,0.42+s.glow*0.58);ctx.beginPath();ctx.arc(s.x,s.y,2,0,7);ctx.fill();
+      }
+      for(const an of [anchor,anchor2]){
+        const main=an===anchor;
+        ctx.fillStyle=rgba(cA,0.07);ctx.beginPath();ctx.arc(an.x,an.y,main?13:9,0,7);ctx.fill();
+        ctx.fillStyle=rgba(cA,0.9);ctx.beginPath();ctx.arc(an.x,an.y,main?3:2.2,0,7);ctx.fill();
+        ctx.strokeStyle=rgba(cA,0.36);ctx.lineWidth=1;ctx.beginPath();ctx.arc(an.x,an.y,main?6.5:5,0,7);ctx.stroke();
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    raf=requestAnimationFrame(frame);
+    return ()=>cancelAnimationFrame(raf);
+  }, [width, height]);
+
+  return <canvas ref={ref} className="bg-canvas" />;
+}
+
+/* ====================================================================
+   LANDING UI PRIMITIVES
+   ==================================================================== */
+function useSize(ref) {
+  const [size, setSize] = useState({ w:0, h:0 });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      const r = el.getBoundingClientRect();
+      setSize(prev => {
+        const w=Math.round(r.width), h=Math.round(r.height);
+        return (prev.w===w&&prev.h===h) ? prev : {w,h};
+      });
+    };
+    measure();
+    let ro;
+    if (typeof ResizeObserver !== 'undefined') {
+      ro = new ResizeObserver(measure); ro.observe(el);
+    } else { window.addEventListener('resize', measure); }
+    return () => { if(ro) ro.disconnect(); else window.removeEventListener('resize',measure); };
+  }, []);
+  return size;
+}
+
+function Eyebrow({ children, center }) {
+  return (
+    <p className={'eyebrow'+(center?' eyebrow--center':'')}>
+      <span className="eyebrow__tick" />{children}
+    </p>
+  );
+}
+
+function SectionHead({ eyebrow, title, lead, center, narrow }) {
+  return (
+    <div className={'s-head'+(center?' s-head--center':'')}>
+      {eyebrow && <Eyebrow center={center}>{eyebrow}</Eyebrow>}
+      {title && <h2 className={'s-title'+(narrow?' s-title--narrow':'')}>{title}</h2>}
+      {lead && <p className="s-lead">{lead}</p>}
+    </div>
+  );
+}
+
+function Stage({ className='', children, render, ...rest }) {
+  const ref = useRef(null);
+  const { w, h } = useSize(ref);
+  return (
+    <div ref={ref} className={'stage '+className} {...rest}>
+      {w>0&&h>0&&render({w,h})}
+      {children}
+    </div>
+  );
+}
+
+/* ====================================================================
+   PROBLEM VISUALIZATIONS
+   ==================================================================== */
+function MiniGlyph({ kind }) {
+  switch(kind) {
+    case 'sms': return (<g className="pviz__g"><rect x="-7" y="-5.5" width="14" height="10" rx="2.6"/><path d="M-3.5,4.5 v3 l3,-3"/><circle cx="-3" cy="-0.6" r="0.7"/><circle cx="0" cy="-0.6" r="0.7"/><circle cx="3" cy="-0.6" r="0.7"/></g>);
+    case 'email': return (<g className="pviz__g"><rect x="-7" y="-5" width="14" height="10" rx="1.4"/><path d="M-7,-4 L0,1.4 L7,-4"/></g>);
+    case 'voice': return (<g className="pviz__g"><path d="M-5,-1.4 L-5,1.4 M-2,-4.2 L-2,4.2 M1,-2.6 L1,2.6 M4,-1.2 L4,1.2"/></g>);
+    case 'portal': return (<g className="pviz__g"><rect x="-7" y="-5.5" width="14" height="11" rx="1.4"/><path d="M-7,-2 H7"/><circle cx="-4.7" cy="-3.8" r="0.5"/></g>);
+    case 'bell': return (<g className="pviz__g"><path d="M-3.6,2 a3.6,3.6 0 0 1 7.2,0 z"/><path d="M-4.4,2 H4.4"/><path d="M-1,3.6 a1,1 0 0 0 2,0"/></g>);
+    case 'doc': return (<g className="pviz__g"><path d="M-5,-7 h7 l3,3 v11 h-10 z"/><path d="M2,-7 v3 h3"/><path d="M-3,-1 h6 M-3,2 h6 M-3,5 h4"/></g>);
+    case 'miss': return (<g className="pviz__g"><path d="M-6,-2.4 a8.5,8.5 0 0 0 11,5.6"/><path d="M2.2,-6 l4.8,4.8 M7,-6 l-4.8,4.8"/></g>);
+    default: return null;
+  }
+}
+
+function Chip({ kind, x, y, alert, dl=0 }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <g className={'pviz__chip'+(alert?' pviz__chip--alert':'')} style={{'--dl':dl+'s'}}>
+        <rect className="pviz__chip-plate" x="-13" y="-10" width="26" height="20" rx="5.5"/>
+        <MiniGlyph kind={kind} />
+      </g>
+    </g>
+  );
+}
+
+function VizChannels() {
+  const sources=[{y:26,g:'email'},{y:64,g:'sms'},{y:104,g:'voice'},{y:142,g:'portal'}];
+  const paths=[
+    {d:'M42,26 C118,44 92,126 246,118',dur:3.6,delay:0.0},
+    {d:'M42,64 C126,152 158,28 286,54',dur:4.4,delay:0.9,drop:true},
+    {d:'M42,104 C120,70 190,150 240,146',dur:3.2,delay:0.4},
+    {d:'M42,142 C134,152 168,40 282,92',dur:4.8,delay:1.4,drop:true},
+  ];
+  return (
+    <svg className="pviz" viewBox="0 0 320 168" fill="none" aria-hidden="true">
+      {paths.map((p,i)=><path key={'b'+i} className="pviz__base" d={p.d}/>)}
+      {paths.map((p,i)=>(
+        <path key={'f'+i} className={'pviz__flow'+(p.drop?' is-drop':'')} d={p.d}
+          style={{'--d':p.dur+'s','--dl':p.delay+'s'}}/>
+      ))}
+      {sources.map((s,i)=>(
+        <g key={'s'+i} transform={`translate(28,${s.y})`}>
+          <circle className="pviz__src" cx="0" cy="0" r="11" style={{'--dl':(i*0.3)+'s'}}/>
+          <MiniGlyph kind={s.g}/>
+        </g>
+      ))}
+      <Chip kind="sms" x={150} y={74} dl={0.2}/>
+      <Chip kind="email" x={190} y={56} dl={1.1}/>
+      <Chip kind="doc" x={196} y={120} dl={0.6}/>
+      <Chip kind="miss" x={118} y={120} alert dl={1.6}/>
+      <g className="pviz__frag">
+        <path className="pviz__bracket" d="M302,56 h-11 v56 h11"/>
+        <text className="pviz__q" x="296" y="88">?</text>
+      </g>
+    </svg>
+  );
+}
+
+function VizDocs() {
+  const cards=[{x:150,label:'W-2'},{x:182,label:'1099'},{x:214,label:'1099'},{x:246,label:'SIGN'}];
+  return (
+    <svg className="pviz" viewBox="0 0 320 168" fill="none" aria-hidden="true">
+      <path className="pviz__base" d="M18,134 H302"/>
+      <g className="pviz__tray">
+        <path d="M30,120 h26 v14 h-26 z"/>
+        <path d="M30,120 l5,-8 h16 l5,8"/>
+      </g>
+      <text className="pviz__lab pviz__lab--accent" x="43" y="150" textAnchor="middle">TO FILE</text>
+      <g className="pviz__ghosts">
+        {[0,1,2].map(i=><rect key={i} className="pviz__ghost" x={224+i*7} y={92-i*5} width="24" height="30" rx="2"/>)}
+      </g>
+      <g className="pviz__queue">
+        {cards.map((c,i)=>(
+          <g key={i} transform={`translate(${c.x},96)`}>
+            <rect className="pviz__card" x="0" y="0" width="24" height="30" rx="2"/>
+            <path className="pviz__card-fold" d="M18,0 v6 h6"/>
+            <text className="pviz__lab" x="11" y="21" textAnchor="middle">{c.label}</text>
+          </g>
+        ))}
+      </g>
+      <g transform="translate(110,96)">
+        <rect className="pviz__card pviz__card--missing" x="0" y="0" width="24" height="30" rx="2"/>
+        <text className="pviz__qmark" x="12" y="20" textAnchor="middle">?</text>
+        <text className="pviz__lab pviz__lab--alert" x="12" y="-9" textAnchor="middle">MISSING</text>
+      </g>
+      <g transform="translate(122,62)">
+        <circle className="pviz__ping" cx="0" cy="0" r="6"/>
+        <circle className="pviz__ping pviz__ping--2" cx="0" cy="0" r="6"/>
+      </g>
+      <text className="pviz__lab pviz__lab--alert" x="150" y="58" textAnchor="start">REMINDER ×3</text>
+    </svg>
+  );
+}
+
+function VizVisibility() {
+  const colX=[150,198,246,294];
+  const stages=['INTAKE','DOCS','REVIEW','FILED'];
+  const rows=[
+    {role:'CLIENT',y:62,st:['done','done','unknown','wait']},
+    {role:'PREPARER',y:104,st:['done','unknown','done','wait']},
+    {role:'REVIEWER',y:146,st:['done','done','wait','unknown']},
+  ];
+  return (
+    <svg className="pviz" viewBox="0 0 320 168" fill="none" aria-hidden="true">
+      <rect className="pviz__band" x={colX[2]-15} y="42" width="30" height="120" rx="5"/>
+      {stages.map((s,i)=>(
+        <text key={i} className={'pviz__lab'+(i===2?' pviz__lab--alert':' pviz__lab--accent')} x={colX[i]} y="32" textAnchor="middle">{s}</text>
+      ))}
+      {rows.map((r,ri)=>(
+        <g key={ri}>
+          <text className="pviz__lab pviz__role" x="14" y={r.y+3} textAnchor="start">{r.role}</text>
+          {r.st.map((st,ci)=>(
+            <g key={ci} className={'pviz__pip pviz__pip--'+st}>
+              <circle className="pviz__pip-ring" cx={colX[ci]} cy={r.y} r="7"/>
+              {st==='done'&&<circle className="pviz__pip-dot" cx={colX[ci]} cy={r.y} r="3.4"/>}
+              {st==='unknown'&&<text className="pviz__pip-q" x={colX[ci]} y={r.y+3.2} textAnchor="middle">?</text>}
+            </g>
+          ))}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* ====================================================================
+   ORCHESTRATION SCENE (A Better Way)
+   ==================================================================== */
+function fsmooth(pts) {
+  let d=`M ${pts[0][0]} ${pts[0][1]}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6,c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6,c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C ${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+function fquad(a,b,bend) {
+  const cx=(a[0]+b[0])/2+(bend||0),cy=(a[1]+b[1])/2;
+  return `M ${a[0]} ${a[1]} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${b[0]} ${b[1]}`;
+}
+
+const OS_BASE_Y=200;
+const OS_MILES=[
+  {x:60,y:200,label:'Intake'},
+  {x:236,y:96,label:'Document collection'},
+  {x:412,y:270,label:'Review'},
+  {x:588,y:166,label:'Follow-up'},
+  {x:764,y:212,label:'Signature'},
+  {x:940,y:200,label:'Filed'},
+];
+const OS_THREAD_D=fsmooth(OS_MILES.map(m=>[m.x,m.y]));
+const OS_TOKENS=[
+  {kind:'email',x:150,y:46,to:[214,120],dur:5.4,dl:0.0},
+  {kind:'sms',x:120,y:320,to:[180,176],dur:6.0,dl:1.1},
+  {kind:'voice',x:300,y:40,to:[350,150],dur:5.6,dl:0.5},
+  {kind:'bell',x:332,y:332,to:[388,234],dur:6.4,dl:1.9},
+  {kind:'doc',x:476,y:50,to:[466,240],dur:5.2,dl:0.8},
+  {kind:'status',x:520,y:330,to:[540,252],dur:6.2,dl:2.5},
+];
+
+function SceneGlyph({ kind }) {
+  switch(kind) {
+    case 'email': return (<g className="os-g"><rect x="-8" y="-6" width="16" height="12" rx="1.6"/><path d="M-8,-5 L0,1.6 L8,-5"/></g>);
+    case 'sms': return (<g className="os-g"><rect x="-8" y="-6.5" width="16" height="12" rx="3"/><path d="M-4,5.5 v3.5 l3.4,-3.5"/><circle cx="-3.4" cy="-0.6" r="0.8"/><circle cx="0" cy="-0.6" r="0.8"/><circle cx="3.4" cy="-0.6" r="0.8"/></g>);
+    case 'voice': return (<g className="os-g"><path d="M-6,-1.6 L-6,1.6 M-2.6,-5 L-2.6,5 M0.8,-3 L0.8,3 M4.2,-1.4 L4.2,1.4 M7,-2.4 L7,2.4"/></g>);
+    case 'bell': return (<g className="os-g"><path d="M-4.2,2.4 a4.2,4.2 0 0 1 8.4,0 z"/><path d="M-5,2.4 H5"/><path d="M-1.2,4.2 a1.2,1.2 0 0 0 2.4,0"/></g>);
+    case 'doc': return (<g className="os-g"><path d="M-5.5,-8 h8 l3.5,3.5 v12.5 h-11.5 z"/><path d="M2.5,-8 v3.5 h3.5"/><path d="M-3,-1 h6.5 M-3,2.4 h6.5 M-3,5.8 h4.5"/></g>);
+    case 'status': return (<g className="os-g"><circle cx="0" cy="0" r="6.4"/><path d="M-3,0.2 l2.2,2.2 l4.2,-4.6"/></g>);
+    default: return null;
+  }
+}
+
+function OrchestrationScene() {
+  const wavy=OS_THREAD_D;
+  const straight=fsmooth(OS_MILES.map(m=>[m.x,OS_BASE_Y]));
+  const morphCss=`@keyframes os-morph {
+    0%, 16% { d: path('${wavy}'); }
+    34%, 64% { d: path('${straight}'); }
+    84%, 100% { d: path('${wavy}'); }
+  }`;
+  return (
+    <svg className="os-svg" viewBox="0 0 1000 380" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <style>{morphCss}</style>
+      {OS_TOKENS.map((tk,i)=>(
+        <path key={'m'+i} className="os-merge-base" d={fquad([tk.x,tk.y],tk.to,0)}/>
+      ))}
+      <path className="os-thread-base" d={wavy}/>
+      <path className="os-thread-flow" d={wavy} pathLength="100"/>
+      <line className="os-axis" x1="48" y1="330" x2="952" y2="330"/>
+      {OS_MILES.map((m,i)=>(
+        <g key={'d'+i}>
+          <line className="os-drop" x1={m.x} y1="320" x2={m.x} y2="326"/>
+          <circle className={'os-tick'+(i===OS_MILES.length-1?' os-tick--filed':'')} cx={m.x} cy="330" r="2.4"/>
+        </g>
+      ))}
+      {OS_TOKENS.map((tk,i)=>(
+        <g key={'t'+i} transform={`translate(${tk.x},${tk.y})`}>
+          <g className="os-pull" style={{'--tx':(tk.to[0]-tk.x)+'px','--ty':(tk.to[1]-tk.y)+'px'}}>
+            <g className="os-token" style={{'--dl':tk.dl+'s'}}>
+              <rect className="os-token-plate" x="-15" y="-12" width="30" height="24" rx="6.5"/>
+              <SceneGlyph kind={tk.kind}/>
+            </g>
+          </g>
+        </g>
+      ))}
+      {OS_MILES.map((m,i)=>{
+        const filed=i===OS_MILES.length-1;
+        return (
+          <g key={'n'+i} className={'os-node'+(filed?' os-node--filed':'')} style={{'--dy':(OS_BASE_Y-m.y)+'px'}}>
+            <circle className="os-node-ring" cx={m.x} cy={m.y} r={filed?12:6} style={{'--dl':(i*0.55)+'s'}}/>
+            {filed
+              ? <path className="os-check" d={`M ${m.x-5} ${m.y} l 3.6 3.8 l 7 -8`}/>
+              : <circle className="os-node-dot" cx={m.x} cy={m.y} r="2.6"/>}
+          </g>
+        );
+      })}
+      {OS_MILES.map((m,i)=>{
+        const filed=i===OS_MILES.length-1;
+        return (
+          <text key={'l'+i} className={'os-lab'+(filed?' os-lab--accent':'')} x={m.x} y="351" textAnchor="middle">
+            {m.label.toUpperCase()}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
+
+/* ====================================================================
+   TEASER SECTIONS
+   ==================================================================== */
+function TeaserMark({ size=8 }) {
+  return <span className="tmark" style={{width:size,height:size}} aria-hidden="true"/>;
+}
+
+function TeaserCapture({ theme='dark', cta='Request an introduction', note, align='left' }) {
+  const [v, setV] = useState({email:'',name:'',firm:''});
+  const [sent, setSent] = useState(false);
+  const on = k => e => setV(s=>({...s,[k]:e.target.value}));
+  const submit = e => { e.preventDefault(); setSent(true); };
+  if (sent) {
+    return (
+      <div className={'tcap tcap--'+theme+' tcap--done tcap--'+align}>
+        <span className="tcap__dot" aria-hidden="true"/>
+        <p className="tcap__thanks">Received. If it's a fit, someone from the desk will reach out — quietly, and soon.</p>
+      </div>
+    );
+  }
+  return (
+    <form className={'tcap tcap--'+theme+' tcap--'+align} onSubmit={submit}>
+      <div className="tcap__fields">
+        <input className="tcap__field" type="email" required placeholder="Work email"
+          value={v.email} onChange={on('email')} aria-label="Work email"/>
+        <div className="tcap__row2">
+          <input className="tcap__field" type="text" placeholder="Your name"
+            value={v.name} onChange={on('name')} aria-label="Your name"/>
+          <input className="tcap__field" type="text" placeholder="Firm (optional)"
+            value={v.firm} onChange={on('firm')} aria-label="Firm (optional)"/>
+        </div>
+      </div>
+      <button className="tcap__btn" type="submit">{cta}<span className="tcap__arrow">→</span></button>
+      {note && <p className="tcap__note">{note}</p>}
+    </form>
+  );
+}
+
+function TNav() {
+  const [solid, setSolid] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > window.innerHeight * 0.8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <nav className={'nav'+(solid?' solid':'')}>
+      <a className="nav__brand" href="#top"><TeaserMark size={9}/><span className="nav__tag">Private preview</span></a>
+      <div className="nav__links">
+        <a className="nav__link" href="#problem">The problem</a>
+        <a className="nav__link" href="#how">A better way</a>
+        <a className="nav__link" href="#belief">Our vision</a>
+      </div>
+      <a className="nav__cta" href="#contact">Request an intro</a>
+    </nav>
+  );
+}
+
+function THero({ accent, accent2, speed }) {
+  return (
+    <Stage className="lhero theme-dark" id="top" data-screen-label="Hero"
+      render={({w,h}) => {
+        const stations=[
+          {x:w*0.13,y:h*0.30,isStation:true},
+          {x:w*0.20,y:h*0.74,isStation:true},
+          {x:w*0.86,y:h*0.24,isStation:true},
+          {x:w*0.90,y:h*0.66,isStation:true},
+          {x:w*0.62,y:h*0.84,isStation:true},
+        ];
+        return <ConstellationBg accent={accent} accent2={accent2} speed={speed} width={w} height={h} theme="dark" stations={stations}/>;
+      }}>
+      <div className="lhero__veil"/>
+      <div className="lhero__inner">
+        <Eyebrow center>For the firms who feel it</Eyebrow>
+        <h1 className="lhero__title">From endless chasing to effortless filing.</h1>
+        <p className="lhero__support">Missing documents hide in inboxes. Follow-ups scatter across email, SMS, calls, and portals. Clients feel uncertain while firms spend the season chasing information instead of preparing returns. We're building a quieter way — and opening it, by introduction, to a select few.</p>
+        <a className="lhero__cta" href="#contact">Request an intro<span className="lhero__cta-arrow">→</span></a>
+      </div>
+      <p className="lhero__foot">Briefing a select group of firms · by introduction only.</p>
+      <span className="lhero__live"><span className="lhero__live-dot"/>Active · not yet public</span>
+      <a className="scrollcue" href="#problem" aria-label="Read on">
+        <span className="scrollcue__label">Read on</span>
+        <span className="scrollcue__line"/>
+      </a>
+    </Stage>
+  );
+}
+
+function TProblem() {
+  const modes=[
+    {n:'01',t:'Communication breaks down',d:'Email, SMS, calls, portals, internal handoffs. The thread of a relationship lives in five places at once — and no one holds all of it.',Viz:VizChannels},
+    {n:'02',t:'Documents stall, follow-ups repeat',d:'A request buried in an inbox, a filing waiting on one missing form, the same reminder sent for the third time.',Viz:VizDocs},
+    {n:'03',t:'No one can see the whole picture',d:'Where a return actually stands is anyone’s guess. Coordination slips, and the client’s confidence slips with it.',Viz:VizVisibility},
+  ];
+  return (
+    <section className="section" id="problem" data-screen-label="The problem">
+      <div className="wrap problem">
+        <div className="problem__head">
+          <div className="problem__title">
+            <SectionHead eyebrow="The problem"
+              title="Client communication is where good firms quietly lose time."/>
+          </div>
+          <div className="problem__copy">
+            <p className="s-lead problem__lead">Firms rarely lose clients because the tax work was wrong — they lose them in the gaps between. The follow-up that never happened, the document buried in an inbox, the question left unanswered for days. It quietly slows filings down and drains the season of its calm.</p>
+          </div>
+        </div>
+        <ol className="problem__list">
+          {modes.map(m=>(
+            <li className="fmode" key={m.n}>
+              <div className="fmode__viz"><m.Viz/></div>
+              <div className="fmode__head">
+                <span className="fmode__n">{m.n}</span>
+                <h3 className="fmode__t">{m.t}</h3>
+              </div>
+              <p className="fmode__d">{m.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function THowGlimpse({ accent, accent2, speed }) {
+  const beats=[
+    {n:'01',t:'Nothing should land in the dark',d:'Every message, on every channel, seen and understood the moment it arrives — day or night.'},
+    {n:'02',t:'Nothing should wait to be chased',d:'Documents, signatures, reminders, follow-ups — moving on a quiet schedule of their own.'},
+    {n:'03',t:'Nothing should be lost in the handoff',d:'What the client said is still there when the work is reviewed, signed, and filed.'},
+  ];
+  return (
+    <section className="section section--tint how" id="how" data-screen-label="How it works">
+      <div className="wrap how__wrap">
+        <SectionHead center eyebrow="A better way"
+          title="From first message to filed return — quietly held together."
+          lead="Today, every message finds its own way through the firm. Tomorrow, every interaction follows a guided path - one calm, coordinated thread that supports clients from intake to filing. A quiet, reliable team member that never clocks out, never drops a detail, and always sounds like your firm."/>
+        <div className="how__scene" aria-hidden="true">
+          <OrchestrationScene/>
+          <span className="how__scene-cap"></span>
+        </div>
+        <ol className="steps">
+          {beats.map(b=>(
+            <li className="step" key={b.n}>
+              <span className="step__n">{b.n}</span>
+              <h3 className="step__t">{b.t}</h3>
+              <p className="step__d">{b.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function TManifesto({ accent, accent2, speed }) {
+  return (
+    <Stage className="manifesto theme-dark" id="belief" data-screen-label="Belief"
+      render={({w,h})=><ConstellationBg accent={accent} accent2={accent2} speed={speed*0.7} width={w} height={h} theme="dark" stations={[]}/>}>
+      <div className="manifesto__veil"/>
+      <div className="wrap manifesto__inner">
+        <Eyebrow>Our vision</Eyebrow>
+        <p className="manifesto__lead">The future of tax firms will be defined by how clients experience the process.</p>
+        <div className="manifesto__copy">
+          <p>A return can be technically flawless and still feel like a failure. Slow responses, misplaced documents, weeks of uncertainty about what comes next — these are the moments that quietly erode trust, even when the work itself is right.</p>
+          <p>The firms that endure will feel different. Responsive before the client asks. Composed when complexity peaks. Calm when the season is anything but. Clients will know what's happening without sending a second email. Teams will stop chasing and start advising — building the kind of relationships that stay well past April.</p>
+          <p>We're building the operational layer that makes that possible. A quiet system active in the background, keeping intake, documents, reminders, and communication moving in perfect sync — so that every interaction, from first contact to filed return, feels like someone was paying close attention.</p>
+        </div>
+        <p className="manifesto__kicker">The mission: less friction, more trust, more returns filed — every season.</p>
+        <div className="manifesto__sign">
+          <span className="manifesto__rule"/>
+          <span className="manifesto__by">The team behind it</span>
+        </div>
+      </div>
+    </Stage>
+  );
+}
+
+function TFinalCta({ accent, accent2, speed }) {
+  return (
+    <Stage className="finalcta theme-dark" id="contact" data-screen-label="Final CTA"
+      render={({w,h})=>{
+        const stations=[
+          {x:w*0.2,y:h*0.34,isStation:true},
+          {x:w*0.82,y:h*0.28,isStation:true},
+          {x:w*0.74,y:h*0.72,isStation:true},
+        ];
+        return <ConstellationBg accent={accent} accent2={accent2} speed={speed} width={w} height={h} theme="dark" stations={stations}/>;
+      }}>
+      <div className="finalcta__veil"/>
+      <div className="finalcta__inner">
+        <Eyebrow center>The codename.</Eyebrow>
+        <h2 className="finalcta__name">Zoe.</h2>
+        <p className="finalcta__support">A quiet operator for modern tax firms. Always active in the background. Introduced selectively. Request a brief introduction to see whether Zoe is a fit for your firm and what a more coordinated tax season could feel like.</p>
+        <div className="finalcta__cta">
+          <TeaserCapture theme="dark" align="center" cta="Request an introduction"
+            note="By introduction · working with a select group of firms."/>
+        </div>
+      </div>
+    </Stage>
+  );
+}
+
+function TFooter() {
+  const navLinks=[
+    {label:'The problem',href:'#problem'},
+    {label:'A better way',href:'#how'},
+    {label:'Our vision',href:'#belief'},
+    {label:'Request an intro',href:'#contact'},
+  ];
+  return (
+    <footer className="footer theme-dark" data-screen-label="Footer">
+      <div className="wrap footer__grid">
+        <div className="footer__brand">
+          <span className="wordmark"><span className="wordmark__mark"/><span className="wordmark__name">Zoe</span></span>
+          <p className="footer__line">A quiet operative for the client side of tax work. Deployed by introduction.</p>
+        </div>
+        <div className="footer__cols">
+          <div className="footer__col">
+            <p className="footer__h">Navigate</p>
+            <ul>{navLinks.map(l=><li key={l.label}><a href={l.href}>{l.label}</a></li>)}</ul>
+          </div>
+        </div>
+      </div>
+      <div className="wrap footer__base">
+        <span>© {new Date().getFullYear()}</span>
+        <span className="footer__base-note">Currently in quiet development</span>
+      </div>
+    </footer>
+  );
+}
+
+/* ====================================================================
+   APP
+   ==================================================================== */
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const accent=t.palette[0], accent2=t.palette[1];
+  const speed=MOTION_SPEED[t.motion]??0.85;
+
+  useEffect(()=>{
+    const r=document.documentElement.style;
+    r.setProperty('--accent',accent);
+    r.setProperty('--accent2',accent2);
+  },[accent,accent2]);
+
+  useEffect(()=>{
+    const r=document.documentElement.style;
+    if(t.headFont==='grotesk'){
+      r.setProperty('--font-head',"'Helvetica Neue', Helvetica, Arial, sans-serif");
+      r.setProperty('--head-weight','600');
+      r.setProperty('--head-tracking','-0.025em');
+    } else {
+      r.setProperty('--font-head',"'Newsreader', Georgia, serif");
+      r.setProperty('--head-weight','400');
+      r.setProperty('--head-tracking','-0.012em');
+    }
+    document.body.classList.toggle('grain-on',!!t.grain);
+  },[t.headFont,t.grain]);
+
+  useEffect(()=>{
+    const b=document.body;
+    b.classList.remove('motion-still','motion-calm','motion-lively');
+    b.classList.add('motion-'+t.motion);
+  },[t.motion]);
+
+  useEffect(()=>{
+    const bar=document.getElementById('scrollprog-bar');
+    const onScroll=()=>{
+      const max=document.documentElement.scrollHeight-window.innerHeight;
+      const p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+      if(bar) bar.style.transform='scaleX('+p+')';
+    };
+    onScroll();
+    window.addEventListener('scroll',onScroll,{passive:true});
+
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sel=['.s-head','.problem__copy > p','.fmode','.step',
+      '.manifesto__lead','.manifesto__copy > p','.manifesto__kicker'].join(', ');
+    const els=Array.from(document.querySelectorAll(sel));
+    els.forEach(el=>{
+      el.setAttribute('data-reveal','');
+      const sibs=Array.from(el.parentElement.children).filter(c=>c.matches(sel));
+      const i=sibs.indexOf(el);
+      if(i>0) el.style.transitionDelay=Math.min(i,5)*75+'ms';
+    });
+    if(reduce){
+      els.forEach(el=>el.classList.add('in'));
+    } else {
+      const io=new IntersectionObserver(ents=>{
+        ents.forEach(e=>{e.target.classList.toggle('in',e.isIntersecting);});
+      },{rootMargin:'0px 0px -8% 0px',threshold:0.12});
+      els.forEach(el=>io.observe(el));
+      window.__tReveal=io;
+    }
+
+    const scene=document.querySelector('.how__scene');
+    let sceneIO;
+    if(scene&&!reduce){
+      sceneIO=new IntersectionObserver(ents=>{
+        ents.forEach(e=>scene.classList.toggle('is-live',e.isIntersecting));
+      },{rootMargin:'0px 0px -12% 0px',threshold:0.2});
+      sceneIO.observe(scene);
+      window.__tScene=sceneIO;
+    } else if(scene){
+      scene.classList.add('is-live');
+    }
+
+    const navLinks=Array.from(document.querySelectorAll('.nav__link'));
+    const spyIds=['problem','how','belief'];
+    const spyEls=spyIds.map(id=>document.getElementById(id)).filter(Boolean);
+    const spy=new IntersectionObserver(ents=>{
+      ents.forEach(e=>{
+        if(!e.isIntersecting) return;
+        const href='#'+e.target.id;
+        navLinks.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')===href));
+      });
+    },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+    spyEls.forEach(el=>spy.observe(el));
+    window.__tSpy=spy;
+
+    return ()=>{
+      window.removeEventListener('scroll',onScroll);
+      if(window.__tReveal) window.__tReveal.disconnect();
+      if(window.__tSpy) window.__tSpy.disconnect();
+      if(window.__tScene) window.__tScene.disconnect();
+    };
+  },[]);
+
+  const viz={accent,accent2,speed};
+
+  return (
+    <React.Fragment>
+      <div className="scrollprog"><div className="scrollprog__bar" id="scrollprog-bar"/></div>
+      <TNav/>
+      <main>
+        <THero {...viz}/>
+        <TProblem/>
+        <THowGlimpse {...viz}/>
+        <TManifesto {...viz}/>
+        <TFinalCta {...viz}/>
+        <TFooter/>
+      </main>
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
