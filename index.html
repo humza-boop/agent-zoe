@@ -891,7 +891,7 @@ function THero({ accent, accent2, speed }) {
       <div className="lhero__inner">
         <Eyebrow center>For the firms who feel it</Eyebrow>
         <h1 className="lhero__title">From endless chasing to effortless filing.</h1>
-        <p className="lhero__support">Clients forget documents. Follow-ups fall through the cracks. Your team spends the season chasing paperwork instead of preparing returns, while clients are left wondering what happens next. We're changing that, quietly, and introducing it to a small group of firms this season.</p>
+        <p className="lhero__support">Clients forget documents. Follow-ups fall through the cracks. Your team spends the season chasing instead of advising. We're introducing a better way, quietly, to a select group of firms.</p>
         <a className="lhero__cta" href="#contact">Request an intro<span className="lhero__cta-arrow">→</span></a>
       </div>
       <p className="lhero__foot">Briefing a select group of firms · by introduction only.</p>
@@ -906,9 +906,9 @@ function THero({ accent, accent2, speed }) {
 
 function TProblem() {
   const modes=[
-    {n:'01',t:'Every client, a different thread',d:"Emails here, texts there, a call last Tuesday. No single person on your team holds the full picture, and clients can feel when they’re navigating on their own.",Viz:VizChannels},
+    {n:'01',t:'Every client, a different thread',d:"Emails here, texts there, a call last Tuesday. No one on the team holds the full picture. Clients can feel it.",Viz:VizChannels},
     {n:'02',t:'Documents stall, follow-ups repeat',d:"A checklist sent twice. A missing form that delays a return for two weeks. The same gentle nudge turning into an awkward chase your team didn’t have time for.",Viz:VizDocs},
-    {n:'03',t:'Clients are left wondering',d:"Where’s my return? Did you get my documents? These questions land in someone’s inbox and compete with everything else on their plate.",Viz:VizVisibility},
+    {n:'03',t:'Clients are left wondering',d:"Where’s my return? Did you get my documents? These questions land in someone’s inbox and compete with everything else.",Viz:VizVisibility},
   ];
   return (
     <section className="section" id="problem" data-screen-label="The problem">
@@ -919,7 +919,7 @@ function TProblem() {
               title="The season slips in the gaps between the work."/>
           </div>
           <div className="problem__copy">
-            <p className="s-lead problem__lead">Most firms do excellent work. But excellent work isn't always what clients remember. They remember the wait, the silence, the uncertainty. A missing document no one followed up on. A status update that never came. The communication gaps, not the returns themselves, are where client relationships quietly fray.</p>
+            <p className="s-lead problem__lead">Excellent work isn't always what clients remember. They remember the wait, the uncertainty, the silence. A missing document no one followed up on. These are the gaps where client relationships quietly fray.</p>
           </div>
         </div>
         <ol className="problem__list">
@@ -941,7 +941,7 @@ function TProblem() {
 
 function THowGlimpse({ accent, accent2, speed }) {
   const beats=[
-    {n:'01',t:'Clients always know where things stand',d:'Zoe sends timely, professional updates so clients never have to wonder, or send that awkward follow-up email.'},
+    {n:'01',t:'Clients always know where things stand',d:'Zoe sends timely updates so clients never have to wonder, or send that awkward follow-up email.'},
     {n:'02',t:'Documents move without the nudging',d:'Reminders, follow-ups, and gentle requests go out automatically, so your team never has to chase the same person twice.'},
     {n:'03',t:'Every detail, right where it needs to be',d:"Everything a client has shared is captured and available when it's time to review, sign, and file. No searching, no backtracking."},
   ];
@@ -950,7 +950,7 @@ function THowGlimpse({ accent, accent2, speed }) {
       <div className="wrap how__wrap">
         <SectionHead center eyebrow="A better way"
           title="One calm, coordinated experience, from intake to filed."
-          lead="Zoe works alongside your team as a dedicated client communications concierge, handling intake, documents, reminders, and updates with the warmth and professionalism your firm is known for. Clients always know where things stand. Your team spends less time chasing and more time advising."/>
+          lead="Zoe works alongside your team as a dedicated client concierge, handling intake, documents, reminders, and updates with the warmth your firm is known for. Clients always know where things stand. Your team spends less time chasing and more time advising."/>
         <div className="how__scene" aria-hidden="true">
           <OrchestrationScene/>
           <span className="how__scene-cap"></span>
@@ -979,14 +979,10 @@ function TManifesto({ accent, accent2, speed }) {
         <p className="manifesto__lead">The future of tax firms will be defined by how clients experience the process.</p>
         <div className="manifesto__copy">
           <p>A return can be technically perfect and still feel like a disappointment. Slow responses, unanswered questions, weeks without knowing what's next. These are the moments that erode client confidence, even when the work itself is exactly right.</p>
-          <p>The firms that thrive will feel different to work with. Responsive before the client asks. Composed when complexity peaks. Calm when the season is anything but. Clients will know what's happening without sending a second email. Teams will stop chasing and start advising, building the kind of relationships that stay well past April.</p>
-          <p>Zoe is what makes that possible. A dedicated client concierge, active in the background, handling intake, documents, reminders, and updates with care, so every interaction, from first contact to filed return, feels personally attended to.</p>
+          <p>The firms that thrive will feel different to work with. Responsive before the client asks. Calm when the season is anything but. Clients always know what's happening. Teams stop chasing and start advising.</p>
+          <p>Zoe is what makes that possible. A dedicated concierge, active in the background, so every interaction from first contact to filed return feels personally attended to.</p>
         </div>
         <p className="manifesto__kicker">The mission: less friction, more trust, more returns filed — every season.</p>
-        <div className="manifesto__sign">
-          <span className="manifesto__rule"/>
-          <span className="manifesto__by">The team behind it</span>
-        </div>
       </div>
     </Stage>
   );
@@ -1007,7 +1003,7 @@ function TFinalCta({ accent, accent2, speed }) {
       <div className="finalcta__inner">
         <Eyebrow center>The codename.</Eyebrow>
         <h2 className="finalcta__name">Zoe.</h2>
-        <p className="finalcta__support">A client communications concierge built for modern tax firms. Zoe handles the intake, the follow-ups, the document requests, and the updates, so your team can focus on the returns. Request an introduction to see whether she's the right fit for your firm.</p>
+        <p className="finalcta__support">A client concierge for modern tax firms. Zoe handles the follow-ups, document requests, and updates so your team can focus on the returns. Request an introduction to see if she's the right fit.</p>
         <div className="finalcta__cta">
           <TeaserCapture theme="dark" align="center" cta="Request an introduction"
             note="By introduction · working with a select group of firms."/>
@@ -1029,7 +1025,7 @@ function TFooter() {
       <div className="wrap footer__grid">
         <div className="footer__brand">
           <span className="wordmark"><span className="wordmark__mark"/><span className="wordmark__name">Zoe</span></span>
-          <p className="footer__line">The client communications concierge for modern tax firms. By introduction only.</p>
+          <p className="footer__line">The client concierge for modern tax firms. By introduction only.</p>
         </div>
         <div className="footer__cols">
           <div className="footer__col">
