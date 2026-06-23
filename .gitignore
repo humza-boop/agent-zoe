@@ -1,0 +1,6 @@
+.DS_Store
+*.DS_Store
+
+# Survey endpoint — copy project/config.example.js → project/config.js and fill in your Apps Script URL.
+# The deployment URL is the credential — never commit this file.
+project/config.js
