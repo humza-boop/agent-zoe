@@ -13,7 +13,7 @@ function SurveyNav() {
   return (
     <nav className="survey-nav" aria-label="Site">
       <Wordmark as="a" />
-      <a href="Agent Zoe Landing.html" className="survey-exit" aria-label="Exit survey">
+      <a href="/" className="survey-exit" aria-label="Exit survey">
         Exit survey
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
@@ -134,7 +134,7 @@ function SurveyComplete() {
         Your responses have been recorded. If you shared your contact details,
         someone from our team will be in touch.
       </p>
-      <a className="survey-complete__link" href="Agent Zoe Landing.html">
+      <a className="survey-complete__link" href="/">
         Return to Agent Zoe →
       </a>
     </div>
