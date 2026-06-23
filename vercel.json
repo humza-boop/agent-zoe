@@ -1,9 +1,6 @@
 {
-  "buildCommand": null,
+  "buildCommand": "",
   "outputDirectory": ".",
-  "framework": null,
-  "rewrites": [
-    { "source": "/survey", "destination": "/project/Agent Zoe Survey.html" },
-    { "source": "/landing", "destination": "/project/Agent Zoe Landing.html" }
-  ]
+  "installCommand": "",
+  "framework": null
 }
