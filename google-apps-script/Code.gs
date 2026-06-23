@@ -23,20 +23,17 @@ var SHEET_NAME   = 'Responses';
 var NOTIFY_EMAIL = 'humza@schema52.com';
 
 // ─── Column headers ──────────────────────────────────────────────────────────
-// Order here = column order in the sheet.
-// recent_investment has no corresponding survey question (reserved for future use).
+// One column per survey question/answer field, plus date and time.
 
 var HEADERS = [
-  'submission_id',
-  'timestamp',
-  'completion_status',
+  'date',
+  'time',
   'firm_size',
   'returns_filed',
   'client_mix',
   'client_mix_other',
   'time_loss',
   'time_loss_other',
-  'busy_season_sinks',
   'pain_client_communication',
   'pain_document_collection',
   'pain_client_responsiveness',
@@ -48,21 +45,12 @@ var HEADERS = [
   'tool_nps',
   'tool_frustrations',
   'tool_frustrations_other',
-  'recent_investment',
   'ai_openness',
   'name',
   'email',
   'firm_name',
   'firm_url',
   'phone',
-  'source_page',
-  'utm_source',
-  'utm_medium',
-  'utm_campaign',
-  'utm_content',
-  'utm_term',
-  'user_agent',
-  'device_type',
 ];
 
 // ─── Web App entry point ─────────────────────────────────────────────────────
@@ -71,6 +59,12 @@ function doPost(e) {
   try {
     var data  = e.parameter || {};
     var sheet = getOrCreateSheet();
+
+    // Split the ISO timestamp the client sends into separate date and time columns.
+    var ts   = data.timestamp ? new Date(data.timestamp) : new Date();
+    var tz   = Session.getScriptTimeZone();
+    data.date = Utilities.formatDate(ts, tz, 'yyyy-MM-dd');
+    data.time = Utilities.formatDate(ts, tz, 'HH:mm:ss');
 
     var row = HEADERS.map(function(col) {
       return data[col] !== undefined ? String(data[col]) : '';
@@ -113,20 +107,19 @@ function getOrCreateSheet() {
 }
 
 /**
- * Run this manually once (Run → setup) to create the header row.
- * Safe to run again — only writes headers if the sheet is empty.
+ * Run this manually (Run → setup) to create or reset the header row.
+ * Safe to run any time — clears and rewrites headers without touching response rows.
  */
 function setup() {
   var ss    = SpreadsheetApp.openById(SHEET_ID);
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
 
-  if (sheet.getLastRow() === 0) {
-    writeHeaders(sheet);
-    Logger.log('Headers written to "' + SHEET_NAME + '".');
-  } else {
-    Logger.log('Sheet already has content — headers not overwritten.');
-  }
+  // Delete only row 1 so existing responses beneath it are preserved.
+  if (sheet.getLastRow() > 0) sheet.deleteRow(1);
+  sheet.insertRowBefore(1);
+  writeHeaders(sheet);
+  Logger.log('Headers written to "' + SHEET_NAME + '".');
 }
 
 function writeHeaders(sheet) {
