@@ -68,14 +68,20 @@ function SurveyIntro({ onStart, onResume, hasSaved }) {
 /* ─── Contact / submission screen ────────────────────────────── */
 
 function SurveyContact({ onSubmit }) {
-  const [name,  setName]  = useState('');
-  const [email, setEmail] = useState('');
-  const [firm,  setFirm]  = useState('');
-  const [url,   setUrl]   = useState('');
-  const [phone, setPhone] = useState('');
-  const [busy,  setBusy]  = useState(false);
+  const [name,       setName]       = useState('');
+  const [email,      setEmail]      = useState('');
+  const [firm,       setFirm]       = useState('');
+  const [url,        setUrl]        = useState('');
+  const [phone,      setPhone]      = useState('');
+  const [busy,       setBusy]       = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const submit = async (skipDetails) => {
+    if (!skipDetails && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError('Please enter a valid email, or leave it blank.');
+      return;
+    }
+    setEmailError('');
     setBusy(true);
     await onSubmit(skipDetails ? {} : { name, email, firm_name: firm, firm_url: url, phone });
   };
@@ -94,8 +100,11 @@ function SurveyContact({ onSubmit }) {
       </p>
       <div className="survey-contact__form">
         <div className="survey-field-row">
-          <input className="survey-field" type="text"  placeholder="Your name"         value={name}  onChange={(e) => setName(e.target.value)}  disabled={busy} />
-          <input className="survey-field" type="email" placeholder="Work email"         value={email} onChange={(e) => setEmail(e.target.value)} disabled={busy} />
+          <input className="survey-field" type="text" placeholder="Your name"  value={name}  onChange={(e) => setName(e.target.value)}  disabled={busy} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5, flex: 1 }}>
+            <input className={'survey-field' + (emailError ? ' is-error' : '')} type="text" placeholder="Work email" value={email} onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(''); }} disabled={busy} />
+            {emailError && <p style={{ margin: 0, fontSize: 12, color: '#b8743f' }}>{emailError}</p>}
+          </div>
         </div>
         <div className="survey-field-row">
           <input className="survey-field" type="text"  placeholder="Firm name"          value={firm}  onChange={(e) => setFirm(e.target.value)}  disabled={busy} />

@@ -26,31 +26,16 @@ var NOTIFY_EMAIL = 'humza@schema52.com';
 // One column per survey question/answer field, plus date and time.
 
 var HEADERS = [
-  'date',
-  'time',
-  'firm_size',
-  'returns_filed',
-  'client_mix',
-  'client_mix_other',
-  'time_loss',
-  'time_loss_other',
-  'pain_client_communication',
-  'pain_document_collection',
-  'pain_client_responsiveness',
-  'pain_workflow_visibility',
-  'magic_wand',
-  'magic_wand_other',
-  'tools_used',
-  'tools_used_other',
-  'tool_nps',
-  'tool_frustrations',
-  'tool_frustrations_other',
-  'ai_openness',
-  'name',
-  'email',
-  'firm_name',
-  'firm_url',
-  'phone',
+  'date', 'time', 'submission_id', 'completion_status',
+  'firm_size', 'returns_filed', 'client_mix', 'client_mix_other',
+  'biggest_challenges', 'top_priority', 'workflow_friction',
+  'time_loss', 'time_loss_other',
+  'current_process', 'current_process_other',
+  'process_satisfaction', 'ai_openness',
+  'name', 'email', 'firm_name', 'firm_url', 'phone',
+  'source_page',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+  'user_agent', 'device_type',
 ];
 
 // ─── Web App entry point ─────────────────────────────────────────────────────
@@ -136,15 +121,16 @@ function writeHeaders(sheet) {
 // ─── Email notification ──────────────────────────────────────────────────────
 
 function sendNotification(data) {
-  var ts      = data.timestamp    || new Date().toISOString();
-  var firm    = data.firm_name    || '(not provided)';
-  var name    = data.name         || '(anonymous)';
-  var email   = data.email        || '—';
-  var size    = data.firm_size    || '—';
-  var returns = data.returns_filed || '—';
-  var pain    = buildPainSummary(data);
-  var interest = data.ai_openness || '—';
-  var source  = data.source_page  || '—';
+  var ts       = data.timestamp            || new Date().toISOString();
+  var firm     = data.firm_name            || '(not provided)';
+  var name     = data.name                 || '(anonymous)';
+  var email    = data.email                || '—';
+  var size     = data.firm_size            || '—';
+  var returns  = data.returns_filed        || '—';
+  var top      = data.top_priority         || '—';
+  var sat      = data.process_satisfaction || '—';
+  var interest = data.ai_openness          || '—';
+  var source   = data.source_page          || '—';
 
   var subject = 'Survey response — Agent Zoe (' + name + ', ' + firm + ')';
 
@@ -161,11 +147,10 @@ function sendNotification(data) {
     'Size:      ' + size,
     'Returns:   ' + returns + ' per year',
     '',
-    '── Pain snapshot ─────────────────────────',
-    pain,
-    '',
-    '── Interest level ────────────────────────',
-    'AI openness: ' + interest,
+    '── Key signals ───────────────────────────',
+    'Top priority:         ' + top,
+    'Process satisfaction: ' + sat,
+    'AI openness:          ' + interest,
     '',
     '── Full response ─────────────────────────',
     'https://docs.google.com/spreadsheets/d/' + SHEET_ID,
@@ -175,17 +160,4 @@ function sendNotification(data) {
   ].join('\n');
 
   MailApp.sendEmail({ to: NOTIFY_EMAIL, subject: subject, body: body });
-}
-
-function buildPainSummary(data) {
-  var rows = [
-    ['Client communication',  data.pain_client_communication],
-    ['Document collection',   data.pain_document_collection],
-    ['Client responsiveness', data.pain_client_responsiveness],
-    ['Workflow visibility',   data.pain_workflow_visibility],
-  ];
-  return rows
-    .filter(function(r) { return r[1]; })
-    .map(function(r)    { return r[0] + ': ' + r[1] + ' / 5'; })
-    .join('\n') || '(not answered)';
 }

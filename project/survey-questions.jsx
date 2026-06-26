@@ -6,10 +6,9 @@
 /* ─── Section & Question Data ─────────────────────────────────── */
 
 const SURVEY_SECTIONS = [
-  { id: 'profile',    label: 'Firm Profile'       },
-  { id: 'operations', label: 'Operational Reality' },
-  { id: 'tools',      label: 'Current Tools'       },
-  { id: 'forward',    label: 'Forward Look'         },
+  { id: 'profile',    label: 'Firm Profile' },
+  { id: 'operations', label: 'Operations'   },
+  { id: 'forward',    label: 'Forward Look' },
 ];
 
 const SURVEY_QUESTIONS = [
@@ -31,73 +30,99 @@ const SURVEY_QUESTIONS = [
     options: ['Individual / W-2', 'Small business', 'Partnerships', 'Corporate', 'Other'],
   },
   /* 04 */ {
-    id: 'time_loss', section: 'operations', type: 'multi',
-    text: 'Where does your team lose the most time?',
+    id: 'biggest_challenges', section: 'operations', type: 'multi',
+    text: 'What are the biggest challenges your firm faces today?',
     hint: 'Select all that apply.',
-    context: 'We\'re mapping where operational drag is most common — what actually consumes time that could be spent on higher-value work.',
     columns: 2,
     options: [
-      'Client follow-up', 'Document collection',
-      'Intake & questionnaires', 'Client communication',
-      'Scheduling', 'Workflow visibility',
-      'Internal coordination', 'Status updates',
-      'Review & filing', 'Other',
+      'Client onboarding & intake',
+      'Document collection & client follow-up',
+      'Client communication & responsiveness',
+      'Workflow visibility & deadline management',
+      'Internal team coordination',
+      'Staffing & capacity during busy season',
+      'Technology & software limitations',
+      'Billing, collections & admin work',
+      'Marketing & client acquisition',
     ],
   },
   /* 05 */ {
-    id: 'pain_rating', section: 'operations', type: 'rating',
-    text: 'Rate the friction your firm experiences today.',
-    hint: '1 = Little to no friction  ·  5 = Significant friction',
-    rows: [
-      'Client communication',
-      'Document collection',
-      'Client responsiveness',
-      'Workflow visibility',
+    id: 'top_priority', section: 'operations', type: 'single',
+    text: 'If you could solve only ONE of these challenges this year, which would it be?',
+    derivedFrom: 'biggest_challenges',
+    options: [
+      'Client onboarding & intake',
+      'Document collection & client follow-up',
+      'Client communication & responsiveness',
+      'Workflow visibility & deadline management',
+      'Internal team coordination',
+      'Staffing & capacity during busy season',
+      'Technology & software limitations',
+      'Billing, collections & admin work',
+      'Marketing & client acquisition',
     ],
   },
   /* 06 */ {
-    id: 'magic_wand', section: 'operations', type: 'single',
-    text: 'If you could fix one thing about your client workflow right now, what would it be?',
+    id: 'workflow_friction', section: 'operations', type: 'multi',
+    text: 'During tax season, which phases take more time or effort than they should?',
+    hint: 'Select all that apply.',
     options: [
-      'Chasing clients for responses',
-      'Collecting documents faster',
-      'Faster client turnaround',
-      'Clearer workflow visibility',
-      'Reducing admin overhead',
-      'Other',
+      'Engagement setup',
+      'Client onboarding & information gathering',
+      'Document collection',
+      'Tax preparation',
+      'Review & quality control',
+      'E-filing & delivery',
+      'Client communication',
+      'Post-filing follow-up',
     ],
   },
   /* 07 */ {
-    id: 'tools_used', section: 'tools', type: 'multi',
-    text: 'Which practice management tools does your firm currently use?',
+    id: 'time_loss', section: 'operations', type: 'multi',
+    text: 'Where does your team lose the most time?',
     hint: 'Select all that apply.',
-    context: 'Helps us understand your current technology ecosystem and where the gaps tend to be.',
     columns: 2,
     options: [
-      'TaxDome', 'Canopy', 'Karbon', 'Liscio',
-      'Financial Cents', 'SafeSend', 'CCH',
-      'Thomson Reuters', 'Other', 'None',
+      'Chasing clients for information',
+      'Collecting documents',
+      'Reviewing submitted information',
+      'Following up on missing items',
+      'Answering status questions',
+      'Scheduling meetings',
+      'Internal handoffs',
+      'Tracking return progress',
+      'Updating multiple systems',
+      'Manual data entry',
+      'Coordinating across team members',
+      'Other',
     ],
   },
   /* 08 */ {
-    id: 'tool_nps', section: 'tools', type: 'single',
-    text: 'Would you recommend your current practice management tools to another firm?',
-    options: ['Definitely yes', 'Probably yes', 'Probably not', 'Definitely not'],
+    id: 'current_process', section: 'operations', type: 'multi',
+    text: 'How are these activities currently handled?',
+    hint: 'Select all that apply.',
+    columns: 2,
+    options: [
+      'Email',
+      'Phone',
+      'SMS / Text',
+      'Client portal',
+      'Tax software (TaxDome, Canopy, etc.)',
+      'Spreadsheets',
+      'Internal workflow tool (Karbon, Asana, etc.)',
+      'Manual / ad hoc processes',
+      'Other',
+    ],
   },
   /* 09 */ {
-    id: 'tool_frustrations', section: 'tools', type: 'multi',
-    text: 'What frustrates you most about your current tools?',
-    hint: 'Select up to three.',
-    context: 'We\'re looking for patterns in what current tools consistently fail to deliver.',
-    maxSelect: 3,
+    id: 'process_satisfaction', section: 'operations', type: 'scale',
+    text: 'How satisfied are you with how your firm currently handles client intake and communication?',
     options: [
-      'Too much manual follow-up',
-      "Clients don't use the portal",
-      'Too many disconnected systems',
-      'Poor workflow visibility',
-      'Weak automation',
-      'Poor client experience',
-      'Too expensive',
+      'Very satisfied',
+      'Somewhat satisfied',
+      'Neutral',
+      'Somewhat dissatisfied',
+      'Very dissatisfied',
     ],
   },
   /* 10 */ {
@@ -173,13 +198,12 @@ function SingleSelect({ q, value, onChange, otherText = '', onOtherChange }) {
 /* ─── Multi-select ────────────────────────────────────────────── */
 
 function MultiSelect({ q, value = [], onChange, otherText = '', onOtherChange }) {
-  const maxReached = !!(q.maxSelect && value.length >= q.maxSelect);
-  const hasOther   = q.options.includes('Other');
+  const hasOther = q.options.includes('Other');
 
   const toggle = (opt) => {
     if (value.includes(opt)) {
       onChange(value.filter((v) => v !== opt));
-    } else if (!maxReached) {
+    } else {
       onChange([...value, opt]);
     }
   };
@@ -188,12 +212,11 @@ function MultiSelect({ q, value = [], onChange, otherText = '', onOtherChange })
     <div>
       <div className={'q-options' + (q.columns === 2 ? ' q-options--grid' : '')} role="group" aria-label={q.text}>
         {q.options.map((opt) => {
-          const sel      = value.includes(opt);
-          const disabled = maxReached && !sel;
+          const sel = value.includes(opt);
           return (
             <button key={opt} role="checkbox" aria-checked={sel}
-              className={'q-option' + (sel ? ' is-selected' : '') + (disabled ? ' is-dim' : '')}
-              onClick={() => toggle(opt)} type="button" disabled={disabled}>
+              className={'q-option' + (sel ? ' is-selected' : '')}
+              onClick={() => toggle(opt)} type="button">
               <OptIndicator multi={true} selected={sel} />
               <span className="q-option__label">{opt}</span>
             </button>
@@ -207,7 +230,7 @@ function MultiSelect({ q, value = [], onChange, otherText = '', onOtherChange })
   );
 }
 
-/* ─── Rating matrix (4 rows × 5 pips) ────────────────────────── */
+/* ─── Rating matrix (rows × 5 pips) ──────────────────────────── */
 
 function RatingMatrix({ q, value = {}, onChange }) {
   return (
@@ -248,7 +271,7 @@ function RatingMatrix({ q, value = {}, onChange }) {
   );
 }
 
-/* ─── Scale select (5-point labeled) ─────────────────────────── */
+/* ─── Scale select (labeled) ──────────────────────────────────── */
 
 function ScaleSelect({ q, value, onChange }) {
   return (

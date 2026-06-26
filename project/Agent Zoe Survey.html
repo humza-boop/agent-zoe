@@ -6,7 +6,7 @@
 <title>Agent Zoe Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
 <style>
 /* ═══════════════════════════════════════════════════════
    TOKENS — matches site design system
@@ -14,7 +14,7 @@
 :root {
   --font-head: 'Newsreader', Georgia, serif;
   --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --head-weight: 400;
   --head-tracking: -0.012em;
   --accent:  #51624f;
@@ -165,22 +165,25 @@ a { color: inherit; }
 .survey-resume-btn:hover { opacity: 0.7; }
 
 /* ═══════════════════════════════════════════════════════
-   QUESTION FRAME + TRANSITIONS
+   PROGRESSIVE-DISCLOSURE SCROLL LIST
 ═══════════════════════════════════════════════════════ */
-.q-frame { display: flex; flex-direction: column; gap: 26px; }
+@keyframes q-dissolve { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: none; } }
 
-body[data-transition="rise"] .q-frame[data-direction="forward"] {
-  animation: q-rise-up 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-body[data-transition="rise"] .q-frame[data-direction="back"] {
-  animation: q-rise-down 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-}
-@keyframes q-rise-up   { from { opacity:0; transform: translateY(26px); } to { opacity:1; transform: none; } }
-@keyframes q-rise-down { from { opacity:0; transform: translateY(-22px); } to { opacity:1; transform: none; } }
+.survey-scroll-list { display: flex; flex-direction: column; gap: 64px; padding-bottom: 96px; }
 
-body[data-transition="dissolve"] .q-frame { animation: q-dissolve 0.28s ease both; }
-@keyframes q-dissolve { from { opacity:0; } to { opacity:1; } }
-body[data-transition="instant"] .q-frame { animation: none; }
+.survey-q-section { transition: opacity .4s; animation: q-dissolve 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.survey-q-section.is-answered:not(.is-active) { opacity: 0.45; }
+.survey-q-section.is-active .q-text { color: var(--fg); }
+
+.survey-q-continue {
+  margin-top: 22px; display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13.5px; font-weight: 500; color: var(--accent);
+  background: none; border: none; cursor: pointer; padding: 0;
+  transition: opacity .2s;
+}
+.survey-q-continue:hover { opacity: 0.65; }
+
+.survey-submit-row { padding-top: 32px; border-top: 1px solid var(--hair); animation: q-dissolve 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
 
 .survey-phase { animation: q-dissolve 0.36s ease both; }
 
@@ -213,7 +216,6 @@ body[data-transition="instant"] .q-frame { animation: none; }
 ═══════════════════════════════════════════════════════ */
 .q-options { display: flex; flex-direction: column; gap: 8px; }
 .q-options--grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-@media (max-width: 480px) { .q-options--grid { grid-template-columns: 1fr; } }
 
 .q-option {
   display: flex; align-items: center; gap: 13px;
@@ -295,36 +297,7 @@ body.theme-dark .q-option { background: rgba(237,234,226,0.06); border-color: rg
 .q-scale-item__num   { font-family: var(--font-mono); font-size: 11px; color: var(--accent); min-width: 16px; }
 .q-scale-item__label { color: var(--fg); }
 
-/* ═══════════════════════════════════════════════════════
-   STICKY FOOTER (back / continue)
-═══════════════════════════════════════════════════════ */
-.survey-footer {
-  position: sticky; bottom: 0; z-index: 50;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 14px clamp(20px, 5vw, 52px);
-  background: var(--footer-bg);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border-top: 1px solid var(--hair);
-}
-.survey-back {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: none; border: none; padding: 10px 0;
-  font-size: 13.5px; color: var(--muted); transition: color 0.2s;
-}
-.survey-back:hover    { color: var(--fg); }
-.survey-back:disabled { opacity: 0.3; cursor: default; }
-.survey-continue {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--btn-bg); color: var(--btn-fg);
-  border: none; border-radius: 4px;
-  font-size: 13.5px; font-weight: 500; letter-spacing: 0.01em;
-  padding: 12px 22px;
-  transition: transform 0.18s, filter 0.2s, opacity 0.2s;
-}
-.survey-continue:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
-.survey-continue:disabled { opacity: 0.32; cursor: not-allowed; }
-.survey-continue__arrow { transition: transform 0.25s; }
-.survey-continue:not(:disabled):hover .survey-continue__arrow { transform: translateX(4px); }
+/* sticky footer removed — replaced by progressive-disclosure inline flow */
 
 /* ═══════════════════════════════════════════════════════
    CONTACT FORM
@@ -427,17 +400,17 @@ body.theme-dark .q-option { background: rgba(237,234,226,0.06); border-color: rg
 <script type="text/babel" src="survey-shell.jsx"></script>
 
 <script type="text/babel">
-const TOTAL_Q = SURVEY_QUESTIONS.length; // 10
+const TOTAL_Q = SURVEY_QUESTIONS.length;
 
 const TWEAK_DEFAULTS = {
-  theme: 'light', transition: 'rise', palette: ['#51624f', '#8a9a86'],
+  theme: 'light', palette: ['#51624f', '#8a9a86'],
 };
 const PALETTES = [
   ['#51624f', '#8a9a86'], ['#9a7b4f', '#c2a878'],
   ['#3c3a35', '#9a958b'], ['#4e6173', '#93a2af'],
 ];
 
-const { useState, useEffect, useCallback } = React;
+const { useState, useEffect, useCallback, useRef } = React;
 const LS_KEY = 'az-survey-2026';
 
 function timeLabel(qIndex) {
@@ -455,18 +428,17 @@ function canContinue(q, answers) {
   return false;
 }
 
+function resolveQuestion(q, answers) {
+  if (q.derivedFrom) {
+    const src = answers[q.derivedFrom] || [];
+    if (src.length > 0) return { ...q, options: src };
+  }
+  return q;
+}
+
 function generateId() {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
-
-function buildPainFields(painRating = {}) {
-  return {
-    pain_client_communication:  String(painRating['Client communication']  ?? ''),
-    pain_document_collection:   String(painRating['Document collection']   ?? ''),
-    pain_client_responsiveness: String(painRating['Client responsiveness'] ?? ''),
-    pain_workflow_visibility:   String(painRating['Workflow visibility']   ?? ''),
-  };
 }
 
 function App() {
@@ -478,73 +450,65 @@ function App() {
   });
 
   const [phase,          setPhase]          = useState('intro');
-  const [currentQ,       setCurrentQ]       = useState(0);
+  const [activeQ,        setActiveQ]        = useState(0);
   const [answers,        setAnswers]        = useState({});
-  const [direction,      setDirection]      = useState('forward');
-  const [qKey,           setQKey]           = useState(0);
   const [pendingContact, setPendingContact] = useState(null);
+  const qRefs = useRef([]);
 
   useEffect(() => {
     if (phase === 'survey' && Object.keys(answers).length > 0) {
-      localStorage.setItem(LS_KEY, JSON.stringify({ answers, currentQ }));
+      localStorage.setItem(LS_KEY, JSON.stringify({ answers, activeQ }));
     }
-  }, [answers, currentQ, phase]);
+  }, [answers, activeQ, phase]);
 
   useEffect(() => { document.body.classList.toggle('theme-dark', t.theme === 'dark'); }, [t.theme]);
   useEffect(() => {
-    document.body.dataset.transition = t.transition;
     document.documentElement.style.setProperty('--accent',  t.palette[0]);
     document.documentElement.style.setProperty('--accent2', t.palette[1]);
-  }, [t.transition, t.palette]);
+  }, [t.palette]);
 
-  const goNext = useCallback(() => {
-    setDirection('forward'); setQKey((k) => k + 1);
-    if (currentQ < TOTAL_Q - 1) setCurrentQ((c) => c + 1);
-    else setPhase('contact');
-  }, [currentQ]);
+  const advanceFrom = useCallback((i) => {
+    if (i < TOTAL_Q - 1) {
+      setActiveQ((prev) => Math.max(prev, i + 1));
+      setTimeout(() => {
+        qRefs.current[i + 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
+  }, []);
 
-  const goBack = useCallback(() => {
-    setDirection('back'); setQKey((k) => k + 1);
-    if (currentQ > 0) setCurrentQ((c) => c - 1);
-    else setPhase('intro');
-  }, [currentQ]);
-
-  const handleChange = useCallback((val) => {
-    const q = SURVEY_QUESTIONS[currentQ];
+  const handleChange = useCallback((i, q, val) => {
     setAnswers((prev) => ({ ...prev, [q.id]: val }));
-  }, [currentQ]);
+    if ((q.type === 'single' || q.type === 'scale') && i === activeQ) {
+      setTimeout(() => advanceFrom(i), 120);
+    }
+  }, [activeQ, advanceFrom]);
 
   const handleSubmit = useCallback(async (contactData) => {
-    const timeLoss = (answers.time_loss ?? []).join(', ');
     const payload = {
-      submission_id:       generateId(),
-      timestamp:           new Date().toISOString(),
-      completion_status:   'complete',
-      firm_size:           answers.firm_size          ?? '',
-      returns_filed:       answers.returns_filed       ?? '',
-      client_mix:          (answers.client_mix         ?? []).join(', '),
-      client_mix_other:    answers.client_mix_other    ?? '',
-      time_loss:           timeLoss,
-      time_loss_other:     answers.time_loss_other     ?? '',
-      busy_season_sinks:   timeLoss,
-      ...buildPainFields(answers.pain_rating),
-      magic_wand:          answers.magic_wand          ?? '',
-      magic_wand_other:    answers.magic_wand_other    ?? '',
-      tools_used:          (answers.tools_used         ?? []).join(', '),
-      tools_used_other:    answers.tools_used_other    ?? '',
-      tool_nps:            answers.tool_nps            ?? '',
-      tool_frustrations:   (answers.tool_frustrations  ?? []).join(', '),
-      tool_frustrations_other: answers.tool_frustrations_other ?? '',
-      recent_investment:   '',
-      ai_openness:         answers.ai_openness         ?? '',
+      submission_id:         generateId(),
+      timestamp:             new Date().toISOString(),
+      completion_status:     'complete',
+      firm_size:             answers.firm_size               ?? '',
+      returns_filed:         answers.returns_filed            ?? '',
+      client_mix:            (answers.client_mix             ?? []).join(', '),
+      client_mix_other:      answers.client_mix_other         ?? '',
+      biggest_challenges:    (answers.biggest_challenges      ?? []).join(', '),
+      top_priority:          answers.top_priority             ?? '',
+      workflow_friction:     (answers.workflow_friction        ?? []).join(', '),
+      time_loss:             (answers.time_loss               ?? []).join(', '),
+      time_loss_other:       answers.time_loss_other           ?? '',
+      current_process:       (answers.current_process         ?? []).join(', '),
+      current_process_other: answers.current_process_other    ?? '',
+      process_satisfaction:  answers.process_satisfaction      ?? '',
+      ai_openness:           answers.ai_openness               ?? '',
       ...contactData,
-      source_page:         window.location.href,
+      source_page:           window.location.href,
       ...getUtmParams(),
-      user_agent:          navigator.userAgent,
-      device_type:         getDeviceType(),
+      user_agent:            navigator.userAgent,
+      device_type:           getDeviceType(),
     };
 
-    localStorage.setItem(LS_KEY, JSON.stringify({ answers, currentQ, pendingPayload: payload }));
+    localStorage.setItem(LS_KEY, JSON.stringify({ answers, activeQ, pendingPayload: payload }));
 
     try {
       await submitSurvey(payload);
@@ -555,26 +519,27 @@ function App() {
       setPendingContact(contactData);
       setPhase('error');
     }
-  }, [answers, currentQ]);
+  }, [answers, activeQ]);
 
   const handleRetry = useCallback(async () => {
     if (pendingContact !== null) { setPhase('contact'); await handleSubmit(pendingContact); }
   }, [pendingContact, handleSubmit]);
 
   const handleStart = () => {
-    setAnswers({}); setCurrentQ(0); setDirection('forward'); setQKey(0); setPhase('survey');
+    setAnswers({}); setActiveQ(0); setPhase('survey');
   };
   const handleResume = () => {
     if (savedState) {
-      setAnswers(savedState.answers || {}); setCurrentQ(savedState.currentQ || 0);
-      setDirection('forward'); setQKey(0); setPhase('survey');
+      setAnswers(savedState.answers || {});
+      setActiveQ(savedState.activeQ || 0);
+      setPhase('survey');
     }
   };
 
-  const progress = phase === 'intro' ? 0 : phase === 'survey' ? currentQ / TOTAL_Q : 1;
-  const q        = SURVEY_QUESTIONS[currentQ];
-  const section  = q ? SURVEY_SECTIONS.find((s) => s.id === q.section) : null;
-  const ok       = canContinue(q, answers);
+  const answeredCount = SURVEY_QUESTIONS.filter((q) => canContinue(q, answers)).length;
+  const progress = phase === 'intro' ? 0 : phase === 'survey' ? answeredCount / TOTAL_Q : 1;
+  const lastQ = SURVEY_QUESTIONS[TOTAL_Q - 1];
+  const allDone = canContinue(lastQ, answers);
 
   return (
     <React.Fragment>
@@ -592,32 +557,63 @@ function App() {
             )}
 
             {phase === 'survey' && (
-              <div className="q-frame" key={`q-${qKey}`}
-                data-direction={direction} data-transition={t.transition}>
-                <div className="q-meta">
-                  <span className="q-section">
-                    <span className="q-section__tick" aria-hidden="true" />
-                    {section?.label}
-                  </span>
-                  <span className="q-meta-right">
-                    <span>{currentQ + 1} of {TOTAL_Q}</span>
-                    <span className="q-meta-right__sep">·</span>
-                    <span>{timeLabel(currentQ)}</span>
-                  </span>
-                </div>
-                <div>
-                  <h2 className="q-text">{q.text}</h2>
-                  {q.hint    && <p className="q-hint"    style={{ marginTop: 8 }}>{q.hint}</p>}
-                  {q.context && <p className="q-context" style={{ marginTop: 7 }}>{q.context}</p>}
-                </div>
-                <QuestionBody q={q} value={answers[q.id]} onChange={handleChange}
-                  otherText={answers[q.id + '_other'] || ''}
-                  onOtherChange={(text) => setAnswers((prev) => ({ ...prev, [q.id + '_other']: text }))} />
+              <div className="survey-scroll-list">
+                {SURVEY_QUESTIONS.map((rawQ, i) => {
+                  if (i > activeQ) return null;
+                  const q        = resolveQuestion(rawQ, answers);
+                  const isActive = i === activeQ;
+                  const isDone   = !isActive && canContinue(q, answers);
+                  const showContinue = (q.type === 'multi' || q.type === 'rating') && isActive && canContinue(q, answers);
+                  const section  = SURVEY_SECTIONS.find((s) => s.id === q.section);
+                  return (
+                    <div key={q.id} ref={(el) => { qRefs.current[i] = el; }}
+                      className={'survey-q-section' + (isActive ? ' is-active' : '') + (isDone ? ' is-answered' : '')}>
+                      <div className="q-meta">
+                        <span className="q-section">
+                          <span className="q-section__tick" aria-hidden="true" />
+                          {section?.label}
+                        </span>
+                        <span className="q-meta-right">
+                          <span>{i + 1} of {TOTAL_Q}</span>
+                          <span className="q-meta-right__sep">·</span>
+                          <span>{timeLabel(i)}</span>
+                        </span>
+                      </div>
+                      <h2 className="q-text" style={{ marginTop: 10 }}>{q.text}</h2>
+                      {q.hint    && <p className="q-hint"    style={{ marginTop: 8 }}>{q.hint}</p>}
+                      {q.context && <p className="q-context" style={{ marginTop: 7 }}>{q.context}</p>}
+                      <div style={{ marginTop: 20 }}>
+                        <QuestionBody q={q} value={answers[q.id]}
+                          onChange={(val) => handleChange(i, q, val)}
+                          otherText={answers[q.id + '_other'] || ''}
+                          onOtherChange={(text) => setAnswers((prev) => ({ ...prev, [q.id + '_other']: text }))} />
+                      </div>
+                      {showContinue && (
+                        <button className="survey-q-continue" type="button" onClick={() => advanceFrom(i)}>
+                          Continue
+                          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                            <path d="M7 2.5v9M3.5 7.5 7 11l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+                {activeQ === TOTAL_Q - 1 && allDone && (
+                  <div className="survey-submit-row">
+                    <button className="survey-primary-btn" type="button" onClick={() => setPhase('contact')}>
+                      Submit responses
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+                        <path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 
             {phase === 'contact' && (
-              <div className="q-frame" key="contact" data-direction="forward" data-transition={t.transition}>
+              <div className="survey-phase" key="contact">
                 <SurveyContact onSubmit={handleSubmit} />
               </div>
             )}
@@ -636,21 +632,6 @@ function App() {
 
           </div>
         </div>
-
-        {phase === 'survey' && (
-          <footer className="survey-footer">
-            <button className="survey-back" onClick={goBack} disabled={currentQ === 0} type="button">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M11.5 7h-9M6.5 3.5 3 7l3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Back
-            </button>
-            <button className="survey-continue" onClick={goNext} disabled={!ok} type="button">
-              Continue
-              <span className="survey-continue__arrow" aria-hidden="true">→</span>
-            </button>
-          </footer>
-        )}
       </div>
 
       <TweaksPanel>
@@ -659,9 +640,6 @@ function App() {
           onChange={(v) => setTweak('theme', v)} />
         <TweakColor label="Accent" value={t.palette} options={PALETTES}
           onChange={(v) => setTweak('palette', v)} />
-        <TweakSection label="Transitions" />
-        <TweakRadio label="Style" value={t.transition} options={['rise', 'dissolve', 'instant']}
-          onChange={(v) => setTweak('transition', v)} />
       </TweaksPanel>
     </React.Fragment>
   );
