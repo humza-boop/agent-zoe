@@ -373,14 +373,14 @@ class ZoeApp extends React.Component {
     const modalDone = modalStatus === "done";
     const modalError = modalStatus === "error";
     const modalSending = modalStatus === "sending";
-    const modalSubmitLabel = modalSending ? "Sending…" : "Request an introduction";
+    const modalSubmitLabel = modalSending ? "Sending…" : "Submit";
 
     const modalOverlayStyle = {
       position: "fixed", inset: 0, zIndex: 200, background: "rgba(28,28,26,0.5)",
       backdropFilter: "blur(3px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px"
     };
     const modalPanelStyle = {
-      position: "relative", width: "100%", maxWidth: "440px", background: "#faf9f5",
+      position: "relative", width: "100%", maxWidth: "440px", background: "#f9faf9",
       border: "1px solid rgba(28,28,26,0.1)", borderRadius: "6px", padding: isMobile ? "34px 22px" : "44px 40px",
       boxShadow: "0 30px 80px rgba(20,20,15,0.28)", animation: "modalIn 320ms cubic-bezier(0.16,1,0.3,1) both"
     };
@@ -401,7 +401,7 @@ class ZoeApp extends React.Component {
     const modalRow2Style = { display: "flex", flexDirection: isMobile ? "column" : "row", gap: "16px" };
     const modalSubmitStyle = {
       marginTop: "8px", alignSelf: "flex-start", display: "inline-flex", alignItems: "center", gap: "9px",
-      background: "#1c1c1a", color: "#faf9f5", border: "none", padding: "14px 26px", borderRadius: "2px",
+      background: "#1c1c1a", color: "#f9faf9", border: "none", padding: "14px 26px", borderRadius: "2px",
       fontFamily: "'Inter',sans-serif", fontSize: "14px", fontWeight: 500, cursor: "pointer", whiteSpace: "nowrap"
     };
     const modalDoneWrapStyle = { display: "flex", alignItems: "flex-start", gap: "12px", paddingRight: "12px" };
@@ -409,20 +409,20 @@ class ZoeApp extends React.Component {
     const modalDoneTextStyle = { margin: 0, fontSize: "15px", lineHeight: 1.6, color: "#4a4943" };
 
     /* ---------- responsive layout values ---------- */
-    const navStyle = { position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", gap: isMobile ? "10px" : "20px", padding: isMobile ? "14px 18px" : "22px 40px", background: "#faf9f5", borderBottom: "1px solid rgba(28,28,26,0.08)" };
+    const navStyle = { position: "sticky", top: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "space-between", gap: isMobile ? "10px" : "20px", padding: isMobile ? "14px 18px" : "22px 40px", background: "#f9faf9", borderBottom: "1px solid rgba(28,28,26,0.08)" };
     const navLinksWrapStyle = { display: "flex", alignItems: "center", gap: isMobile ? "12px" : "28px", flexShrink: 0 };
     const navSecondaryLinkStyle = { display: isMobile ? "none" : "inline", fontSize: "13.5px", color: "#4a4943", whiteSpace: "nowrap" };
     const navCtaStyle = { fontSize: isMobile ? "12.5px" : "13px", fontWeight: 500, border: "1px solid #1c1c1a", padding: isMobile ? "8px 14px" : "9px 20px", borderRadius: "2px", color: "#1c1c1a", whiteSpace: "nowrap", flexShrink: 0 };
-    const heroSectionStyle = { background: "#faf9f5", padding: isMobile ? "88px 20px 64px" : "150px 24px 118px", display: "flex", justifyContent: "center" };
-    const contextOuterStyle = { background: "#faf9f5", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "64px 20px 72px" : "120px 24px 138px", position: "relative", overflow: "hidden" };
-    const howOuterSectionStyle = { background: "#faf9f5", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "56px 20px 60px" : "90px 64px 120px" };
+    const heroSectionStyle = { background: "#f9faf9", padding: isMobile ? "88px 20px 64px" : "150px 24px 118px", display: "flex", justifyContent: "center" };
+    const contextOuterStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "64px 20px 72px" : "120px 24px 138px", position: "relative", overflow: "hidden" };
+    const howOuterSectionStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "56px 20px 60px" : "90px 64px 120px" };
     const howGridStyle = { maxWidth: "1180px", margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "0.85fr 1fr", gap: isMobile ? "44px" : "96px", alignItems: "center" };
-    const previewOuterWrapStyle = { background: "#faf9f5", border: "1px solid rgba(28,28,26,0.1)", borderRadius: "8px", padding: isMobile ? "8px" : "10px", boxShadow: "0 30px 70px rgba(28,28,26,0.14)", width: isMobile ? "100%" : "auto", maxWidth: isMobile ? "380px" : "none" };
+    const previewOuterWrapStyle = { background: "#f9faf9", border: "1px solid rgba(28,28,26,0.1)", borderRadius: "8px", padding: isMobile ? "8px" : "10px", boxShadow: "0 30px 70px rgba(28,28,26,0.14)", width: isMobile ? "100%" : "auto", maxWidth: isMobile ? "380px" : "none" };
     const previewBoxStyle = { position: "relative", width: isMobile ? "100%" : "380px", height: isMobile ? "360px" : "420px", borderRadius: "5px", overflow: "hidden" };
     const previewInnerPadStyle = { position: "relative", zIndex: 1, width: "100%", height: "100%", padding: isMobile ? "22px 20px" : "28px 26px", display: "flex", flexDirection: "column" };
     const marqueeWrapStyle = { position: "relative", margin: isMobile ? "0 -20px" : "0 -26px" };
-    const pilotOuterStyle = { background: "#faf9f5", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "60px 20px 52px" : "100px 64px 88px" };
-    const finalCtaOuterStyle = { background: "#faf9f5", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "84px 20px 0" : "140px 24px 0", display: "flex", flexDirection: "column", alignItems: "center" };
+    const pilotOuterStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "60px 20px 52px" : "100px 64px 88px" };
+    const finalCtaOuterStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "84px 20px 0" : "140px 24px 0", display: "flex", flexDirection: "column", alignItems: "center" };
 
     /* ---------- hero phrase cycle ---------- */
     const phrases = ZoeApp.PHRASES;
@@ -587,7 +587,7 @@ class ZoeApp extends React.Component {
 
     const finalHeadlineStyle = { margin: 0, fontFamily: "'Hedvig Letters Serif',Georgia,'Times New Roman',serif", fontWeight: 400, fontSize: "clamp(36px,4.6vw,54px)", lineHeight: 1.15, letterSpacing: "-0.01em", color: "#1c1c1a", opacity: finalCtaInView ? 1 : 0, transform: finalCtaInView ? "translateY(0px)" : "translateY(12px)", transition: "opacity 0.8s ease, transform 0.8s ease" };
     const finalCopyStyle = { margin: 0, fontSize: "17px", lineHeight: 1.6, color: "#4a4943", opacity: finalCtaInView ? 1 : 0, transform: finalCtaInView ? "translateY(0px)" : "translateY(12px)", transition: "opacity 0.8s ease 0.14s, transform 0.8s ease 0.14s" };
-    const finalBtnStyle = { marginTop: "16px", display: "inline-flex", alignItems: "center", gap: "11px", background: "#1c1c1a", color: "#faf9f5", padding: "18px 40px", borderRadius: "3px", fontSize: "14.5px", fontWeight: 500, letterSpacing: "0.01em", lineHeight: 1, whiteSpace: "nowrap", flexShrink: 0, opacity: finalCtaInView ? 1 : 0, transform: finalCtaInView ? "translateY(0px)" : "translateY(12px)", transition: "opacity 0.8s ease 0.28s, transform 0.8s ease 0.28s, background 250ms cubic-bezier(0.4,0,0.2,1), box-shadow 250ms cubic-bezier(0.4,0,0.2,1)" };
+    const finalBtnStyle = { marginTop: "16px", display: "inline-flex", alignItems: "center", gap: "11px", background: "#1c1c1a", color: "#f9faf9", padding: "18px 40px", borderRadius: "3px", fontSize: "14.5px", fontWeight: 500, letterSpacing: "0.01em", lineHeight: 1, whiteSpace: "nowrap", flexShrink: 0, opacity: finalCtaInView ? 1 : 0, transform: finalCtaInView ? "translateY(0px)" : "translateY(12px)", transition: "opacity 0.8s ease 0.28s, transform 0.8s ease 0.28s, background 250ms cubic-bezier(0.4,0,0.2,1), box-shadow 250ms cubic-bezier(0.4,0,0.2,1)" };
 
     return (
       <div id="top" style={{ background: "#ffffff" }}>
@@ -619,7 +619,7 @@ class ZoeApp extends React.Component {
               <span>for tax and accounting firms.</span>
             </h1>
             <p style={{ margin: "0 0 48px", fontSize: "18px", lineHeight: 1.65, color: "#4a4943", maxWidth: "46ch" }}>Zoe handles client communication through busy season and beyond, giving your team more time for the work that matters and clients a more proactive experience.</p>
-            <a id="hero-cta" href="#final-cta" onClick={this.openModal} style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "#1c1c1a", color: "#faf9f5", padding: "16px 32px", borderRadius: "2px", fontSize: "14.5px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>Let's Talk <span className="cta-arrow">→</span></a>
+            <a id="hero-cta" href="#final-cta" onClick={this.openModal} style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "#1c1c1a", color: "#f9faf9", padding: "16px 32px", borderRadius: "2px", fontSize: "14.5px", fontWeight: 500, whiteSpace: "nowrap", flexShrink: 0 }}>Let's Talk <span className="cta-arrow">→</span></a>
           </div>
         </section>
 
@@ -709,8 +709,8 @@ class ZoeApp extends React.Component {
                     {/* STATE 3: real ecosystem, two drifting rows */}
                     <div style={{ display: active === 2 ? "flex" : "none", flexDirection: "column", width: "100%", height: "100%", justifyContent: "center" }}>
                       <div style={marqueeWrapStyle}>
-                        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "36px", background: "linear-gradient(to right, #faf9f5, transparent)", zIndex: 2, pointerEvents: "none" }}></div>
-                        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "36px", background: "linear-gradient(to left, #faf9f5, transparent)", zIndex: 2, pointerEvents: "none" }}></div>
+                        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "36px", background: "linear-gradient(to right, #f9faf9, transparent)", zIndex: 2, pointerEvents: "none" }}></div>
+                        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "36px", background: "linear-gradient(to left, #f9faf9, transparent)", zIndex: 2, pointerEvents: "none" }}></div>
                         <div style={{ overflow: "hidden", padding: "8px 0" }}>
                           <div style={{ display: "flex", gap: "12px", width: "max-content", animation: "marqueeLeft 32s linear infinite" }}>
                             {toolRow1.map((tool, i) => (
