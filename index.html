@@ -418,7 +418,12 @@ class ZoeApp extends React.Component {
     const howOuterSectionStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "56px 20px 60px" : "90px 64px 120px" };
     const howGridStyle = { maxWidth: "1180px", margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "0.85fr 1fr", gap: isMobile ? "44px" : "96px", alignItems: "center" };
     const previewOuterWrapStyle = { background: "#f9faf9", border: "1px solid rgba(28,28,26,0.1)", borderRadius: "8px", padding: isMobile ? "8px" : "10px", boxShadow: "0 30px 70px rgba(28,28,26,0.14)", width: isMobile ? "100%" : "auto", maxWidth: isMobile ? "380px" : "none" };
-    const previewBoxStyle = { position: "relative", width: isMobile ? "100%" : "380px", height: isMobile ? "360px" : "420px", borderRadius: "5px", overflow: "hidden" };
+    // iOS Safari has a long-standing bug where `overflow: hidden` + `border-radius`
+    // fails to clip children that are on their own compositing layer (CSS `transform`
+    // animations — the marquee pills in STATE 3 and the glyph scene in STATE 2 both
+    // use transform-based keyframes). Forcing this container onto its own layer via
+    // translateZ(0) makes Safari establish the clip correctly; harmless elsewhere.
+    const previewBoxStyle = { position: "relative", width: isMobile ? "100%" : "380px", height: isMobile ? "360px" : "420px", borderRadius: "5px", overflow: "hidden", transform: "translateZ(0)", WebkitTransform: "translateZ(0)" };
     const previewInnerPadStyle = { position: "relative", zIndex: 1, width: "100%", height: "100%", padding: isMobile ? "22px 20px" : "28px 26px", display: "flex", flexDirection: "column" };
     const marqueeWrapStyle = { position: "relative", margin: isMobile ? "0 -20px" : "0 -26px" };
     const pilotOuterStyle = { background: "#f9faf9", borderTop: "1px solid rgba(28,28,26,0.08)", padding: isMobile ? "60px 20px 52px" : "100px 64px 88px" };
